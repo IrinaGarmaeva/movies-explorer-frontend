@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="hero">
       <div className="hero__container">
         <h1 className="hero__title">
-          Учебный проект студента факультета Веб-разработки.
+          Учебный проект студента факультета<br></br>Веб-разработки.
         </h1>
         <p className="hero__subtitle">
           Листайте ниже, чтобы узнать больше про этот проект и его создателя.
