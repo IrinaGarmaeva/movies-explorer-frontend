@@ -6,11 +6,8 @@ function App() {
   return (
     <div className="root">
       <div className="page">
-        {/* <div className="container"> */}
-          <Header />
-          {/* <Main />
-          <Footer /> */}
-        {/* </div> */}
+        <Header />
+        <Main />
       </div>
     </div>
   );
