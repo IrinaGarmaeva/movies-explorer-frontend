@@ -1,18 +1,18 @@
-.hero {
+.promo {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background: #073042;
 }
 
-.hero__container {
+.promo__container {
   display: flex;
   flex-direction: column;
   margin: 75px 0;
   align-items: flex-start;
 }
 
-.hero__title {
+.promo__title {
   color: #fff;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 50px;
@@ -22,7 +22,7 @@
   max-width: 640px;
 }
 
-.hero__subtitle {
+.promo__subtitle {
   margin-top: 36px;
   width: 310px;
   color: #fff;
@@ -34,7 +34,7 @@
   opacity: 0.5;
 }
 
-.hero__button {
+.promo__button {
   display: inline-block;
   margin-top: 146px;
   color: #fff;
@@ -48,7 +48,7 @@
   background: #073042;
 }
 
-.hero__image {
+.promo__image {
   margin-top: 75px;
   width: 310px;
   height: 304px;

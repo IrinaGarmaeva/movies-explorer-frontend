@@ -1,10 +1,10 @@
-.stack {
+.techs {
   display: flex;
   flex-direction: column;
   padding: 100px 0;
   background: #272727;
 }
-.stack__title {
+.techs__title {
   color: #fff;
   font-size: 22px;
   font-style: normal;
@@ -13,7 +13,7 @@
   letter-spacing: -0.88px;
   margin-bottom: 23px;
 }
-.stack__container {
+.techs__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@
   padding-top: 90px;
 }
 
-.stack__subtitle {
+.techs__subtitle {
   color: #fff;
   text-align: center;
   font-size: 50px;
@@ -33,7 +33,7 @@
   margin-bottom: 26px;
 }
 
-.stack__text {
+.techs__text {
   max-width: 460px;
   text-align: center;
   color: #fff;
@@ -45,12 +45,12 @@
   letter-spacing: -0.56px;
 }
 
-.stack__items {
+.techs__items {
   margin-top: 100px;
   display: flex;
 }
 
-.stack__item {
+.techs__item {
   color: #fff;
   text-align: center;
   font-size: 14px;
@@ -67,6 +67,6 @@
   justify-content: center;
 }
 
-.stack__item:not(:last-child) {
+.techs__item:not(:last-child) {
   margin-right: 10px;
 }
