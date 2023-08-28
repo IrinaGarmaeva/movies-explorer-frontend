@@ -47,21 +47,30 @@
   flex-direction: row;
 }
 
+.aboutProject__timeline_type_backend {
+  width: 20%
+}
+
+.aboutProject__timeline_type_other {
+  width: 80%
+}
+
 .aboutProject__timeline-title {
   color: #000;
   text-align: center;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: 228px;
+  max-width: 228px; 
+  width: 100%;
   background: #3ddc84;
   text-align: center;
   padding: 9.5px 0;
 }
 
 .aboutProject__timeline-title_type_dark {
-  width: 912px;
+  max-width: 912px;
+  width: 100%;
   color: #fff;
   text-align: center;
   font-size: 14px;
