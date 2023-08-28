@@ -5,7 +5,7 @@ import profileIcon from "../../images/profile.svg";
 // view depends on state isLoggedIn
 const Header = () => {
   return (
-    <header className="header container">
+    <header className="header">
       <img src={logoImage} alt="Логотип" className="header__logo" />
       <div className="header__nav-block ">
         {/* <ul className='header__nav'>

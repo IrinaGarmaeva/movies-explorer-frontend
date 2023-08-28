@@ -1,7 +1,7 @@
 .portfolio {
   display: flex;
   flex-direction: column;
-  padding-bottom: 105px;
+  padding: 0 70px 105px 70px;
 }
 
 .portfolio__title {
@@ -15,4 +15,10 @@
 
 .portfolio__project-list {
   margin-top: 50px;
+}
+
+@media (max-width: 870px) {
+  .portfolio {
+    padding: 0 50px 90px 50px;
+  }
 }

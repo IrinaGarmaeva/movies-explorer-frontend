@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   background: #073042;
-  padding: 75px 0;
+  padding: 75px 70px 75px 70px;
 }
 
 .promo__container {
@@ -59,7 +59,11 @@
     flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
-    padding: 140px 0 76px 0;
+    padding: 140px 50px 76px 50px;
+  }
+
+  .promo__image {
+    margin-top: 0;
   }
 
   .promo__title {
@@ -67,15 +71,11 @@
     text-align: center;
     line-height: 125%;
     max-width: 680px;
-    margin-top: 48px;
-  }
-
-  .promo__image {
-    margin-top: 0px;
   }
 
   .promo__container {
     align-items: center;
+    margin-top: 48px;
   }
 
   .promo__subtitle {
@@ -93,11 +93,8 @@
 }
 
 @media (max-width: 380px) {
-  .promo {
-    padding: 70px 0 30px 0;
-  }
-
   .promo__image {
+    margin-top: 70px;
     width: 210px;
     height: 206px;
   }
@@ -117,5 +114,4 @@
   .promo__button {
     margin-top: 80px;
   }
-
 }
