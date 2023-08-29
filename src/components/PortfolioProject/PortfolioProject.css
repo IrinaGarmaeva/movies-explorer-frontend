@@ -5,6 +5,7 @@
 
 .portfolio__project:not(:last-child) {
   border-bottom: 1px solid #424242;
+  padding-bottom: 9px;
 }
 
 .portfolio__project:not(:first-child) {
@@ -18,9 +19,9 @@
   letter-spacing: -1.2px;
 }
 
-.portfolio__project-link:not(:last-child) {
+/* .portfolio__project-link:not(:last-child) {
   margin-bottom: 19px;
-}
+} */
 
 .portfolio__project-arrow {
   width: 28px;
@@ -32,13 +33,29 @@
 }
 
 @media (max-width: 870px) {
-  .portfolio {
-    padding: 0 50px 90px 50px;
-  }
-
   .portfolio__project-link {
     font-size: 28px;
     line-height: 178.571%;
     letter-spacing: -1.12px;
+  }
+}
+
+@media (max-width: 550px) {
+  .portfolio__project-link {
+    font-size: 18px;
+    line-height: 155.556%;
+    letter-spacing: -0.72px;
+  }
+
+  .portfolio__project-arrow {
+    width: 18px;
+    height: 28px;
+    font-size: 18px;
+    line-height: 155.556%;
+    letter-spacing: -0.72px;
+  }
+
+  .portfolio__project:not(:last-child) {
+    padding-bottom: 19px;
   }
 }

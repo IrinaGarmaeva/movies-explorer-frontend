@@ -16,7 +16,6 @@
   color: #fff;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 50px;
-  font-style: normal;
   font-weight: 400;
   line-height: 116%;
   max-width: 640px;
@@ -28,7 +27,6 @@
   color: #fff;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 13px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
   opacity: 0.5;
@@ -39,7 +37,6 @@
   margin-top: 146px;
   color: #fff;
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
   line-height: 133.333%;
   border-radius: 3px;
@@ -49,7 +46,6 @@
 }
 
 .promo__image {
-  margin-top: 75px;
   width: 310px;
   height: 304px;
 }
@@ -93,10 +89,17 @@
 }
 
 @media (max-width: 380px) {
+  .promo {
+    padding: 70px 10px 30px 10px;
+  }
+
   .promo__image {
-    margin-top: 70px;
     width: 210px;
     height: 206px;
+  }
+
+  .promo__container {
+    margin-top: 44px;
   }
 
   .promo__title {
@@ -104,7 +107,6 @@
     line-height: 126.667%;
     letter-spacing: -1.2px;
     max-width: 300px;
-    margin-top: 44px;
   }
 
   .promo__subtitle {

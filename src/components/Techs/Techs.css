@@ -102,3 +102,44 @@
     height: 57px;
   }
 }
+
+
+@media (max-width: 700px) {
+  .techs {
+    padding: 72px 18px 70px 18px;
+  }
+
+  .techs__title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    margin-bottom: 28px;
+  }
+
+  .techs__container {
+    padding-top: 62px;
+  }
+
+  .techs__subtitle {
+    font-size: 30px;
+    letter-spacing: -1.2px;
+    margin-bottom: 24px;
+  }
+
+  .techs__text {
+    font-size: 11px;
+    line-height: 145.455%;
+    letter-spacing: -0.44px;
+  }
+
+  .techs__items {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .techs__item:not(:last-child) {
+    margin-right: 0;
+  }
+
+}
