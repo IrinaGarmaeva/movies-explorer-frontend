@@ -2,7 +2,7 @@ import "./PortfolioProject.css";
 
 const PortfolioProject = ({url, title}) => {
   return (
-    <li className="portfolio__project">
+    <li className="portfolio__project link">
       <a
         href={url}
         target="_blank"
@@ -11,7 +11,7 @@ const PortfolioProject = ({url, title}) => {
       >
         {title}
       </a>
-      <p className="portfolio__project-arrow">↗</p>
+      <a className="portfolio__project-arrow" href={url}>↗</a>
     </li>
   );
 };

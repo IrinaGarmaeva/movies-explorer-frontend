@@ -6,10 +6,17 @@
   align-items: center;
   background: #073042;
   padding: 0 70px;
+  position: relative;
 }
 
 .header__logo {
   width: 38px;
+}
+
+.header__nav-menu {
+  display: none;
+  position: absolute;
+  right: 30px;
 }
 
 .header__nav-block {
@@ -56,11 +63,20 @@
   font-weight: 500;
   font-style: normal;
   line-height: 133.333%;
+  transition: 0.7s ease;
+}
+
+.header__button:hover {
+  background: #fff;
 }
 
 @media (max-width: 870px) {
   .header {
     padding: 0 30px;
+  }
+
+  .header__nav-menu {
+    display: block;
   }
 }
 

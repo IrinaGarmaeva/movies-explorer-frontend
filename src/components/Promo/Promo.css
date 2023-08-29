@@ -43,6 +43,12 @@
   border: 1px solid rgba(255, 255, 255, 0.6);
   padding: 10px 20px;
   background: #073042;
+  transition: 1s ease;
+}
+
+.promo__button:hover {
+  background: #3DDC84;
+  color: #000;
 }
 
 .promo__image {

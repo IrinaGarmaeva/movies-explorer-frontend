@@ -49,23 +49,13 @@ a {
   min-height: 100vh;
 }
 
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding:  0 70px;
-  outline: 2px green dashed;
+.link {
+  opacity: 1;
+  transition: 0.7s ease;
 }
 
-@media (max-width:768px) {
-  .container {
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-}
-
-@media (max-width:380px) {
-  .container {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
+.link:hover {
+  opacity: 0.7;
+  transform: scale(1.06);
+  color: #3DDC84;
 }
