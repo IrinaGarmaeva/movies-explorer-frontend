@@ -70,6 +70,10 @@
   background: #fff;
 }
 
+.mobile {
+  flex-direction: column;
+}
+
 @media (max-width: 870px) {
   .header {
     padding: 0 30px;
@@ -77,6 +81,13 @@
 
   .header__nav-menu {
     display: block;
+  }
+
+  .header__link {
+    display: none;
+  }
+  .header__button {
+    display: none;
   }
 }
 
