@@ -26,6 +26,10 @@ body {
   --color-border-light: #AAA;
   --color-timeline_dark: #303030;
   --color-light-dark: #8b8b8b;
+  --color-card-bg: #222;
+  --color-btn-bg: #313131;
+  --color-btn-dark: #2F2F2F;
+  --color-pink: #EE3465;
 }
 
 ul, ol {
