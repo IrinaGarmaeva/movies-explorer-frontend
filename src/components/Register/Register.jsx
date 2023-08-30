@@ -22,7 +22,7 @@ const Register = () => {
             // placeholder="Введите ваше имя"
             required
           ></input>
-          <label htmlFor="email" className="auth__label">Email</label>
+          <label htmlFor="email" className="auth__label">E-mail</label>
           <input
             // value={formValue.email}
             // onChange={handleChange}
@@ -47,6 +47,10 @@ const Register = () => {
           {isLoading ? "Регистрация ... " : "Зарегистрироваться"}
         </button>
       </form>
+      <div className="auth__login">
+        <p className="auth__login-text">Уже зарегистрированы?</p>
+        <a href="#" className="auth__login-button">Войти</a>
+      </div>
       {/* <Link to="/sign-in" className="auth__login">
         Уже зарегистрированы? Войти
       </Link> */}
