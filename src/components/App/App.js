@@ -13,6 +13,11 @@ import NotFound from '../NotFound/NotFound';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const user = {
+    name: 'Виталий',
+    email: 'pochta@yandex.ru'
+  }
+
   return (
     <div className="root">
       <div className="page">
@@ -29,7 +34,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile user={user}/>} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
