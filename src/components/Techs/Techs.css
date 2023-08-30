@@ -1,12 +1,11 @@
 .techs {
   display: flex;
   flex-direction: column;
-  background: #272727;
+  background: var(--color-background-light-dark);
   padding: 100px 70px;
 }
 
 .techs__title {
-  color: #fff;
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
@@ -20,15 +19,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid #424242;
+  border-top: 1px solid var(--color-border);
   padding-top: 90px;
 }
 
 .techs__subtitle {
-  color: #fff;
   text-align: center;
   font-size: 50px;
-  font-style: normal;
   font-weight: 400;
   line-height: 116%;
   letter-spacing: -2px;
@@ -38,7 +35,6 @@
 .techs__text {
   max-width: 460px;
   text-align: center;
-  color: #fff;
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -53,14 +49,13 @@
 }
 
 .techs__item {
-  color: #fff;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.56px;
   border-radius: 10px;
-  background: #303030;
+  background: var(--color-timeline_dark);
   width: 90px;
   height: 60px;
   display: flex;

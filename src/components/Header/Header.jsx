@@ -6,9 +6,9 @@ import closeIcon from "../../images/icon_close.svg";
 import burgerMenuIcon from "../../images/icon_burger-menu.svg";
 
 
-const Header = () => {
+const Header = ({isLoggedIn}) => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const handleClick = () => {
     const menu = document.getElementById('menu')
@@ -19,7 +19,7 @@ const Header = () => {
   }
 
   return (
-    <header className="header">
+    <header className={isLoggedIn ? 'header header_color_dark' : 'header header_color_blue'} >
       <img src={logoImage} alt="Логотип" className="header__logo" />
         {isLoggedIn ? (
           <>

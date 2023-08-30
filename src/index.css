@@ -14,13 +14,18 @@ body {
 
 :root {
   --color-background: #361281;
-  --color-background_dark: #202020;
+  --color-dark-blue: #073042;
+  --color-background-dark: #202020;
+  --color-background-light-dark: #272727;
   --color-white: #FFF;
   --color-green: #3DDC84;
   --color-blue: #4285F4;
   --color-black: #000;
   --color-gray: #8B8B8B;
   --color-border: #424242;
+  --color-border-light: #AAA;
+  --color-timeline_dark: #303030;
+  --color-light-dark: #8b8b8b;
 }
 
 ul, ol {
@@ -40,7 +45,7 @@ a {
 
 .root {
   min-height: 100vh;
-  background: #202020;
+  background: var(--color-background-dark);
 }
 
 .page {
@@ -51,7 +56,7 @@ a {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-  color: #FFF;;
+  color: var(--color-white);
   min-width: 320px;
   max-width: 1280px;
   margin: 0 auto;

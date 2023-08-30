@@ -4,9 +4,16 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: #073042;
   padding: 0 70px;
   position: relative;
+}
+
+.header_color_dark {
+  background-color: var(--color-background-dark);
+}
+
+.header_color_blue{
+  background: var(--color-dark-blue);
 }
 
 .header__logo {
@@ -55,9 +62,9 @@
 
 .header__button {
   border-radius: 3px;
-  background: #3ddc84;
+  background: var(--color-green);
   border: none;
-  color: #000;
+  color: var(--color-black);
   padding: 8px 20px;
   font-size: 12px;
   font-weight: 500;
@@ -67,7 +74,7 @@
 }
 
 .header__button:hover {
-  background: #fff;
+  background: var(--color-white);
 }
 
 .mobile {

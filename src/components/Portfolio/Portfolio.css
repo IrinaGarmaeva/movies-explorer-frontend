@@ -5,7 +5,7 @@
 }
 
 .portfolio__title {
-  color: #8b8b8b;
+  color: var(--color-light-dark);
   font-feature-settings: "clig" off, "liga" off;
   font-size: 18px;
   font-weight: 400;

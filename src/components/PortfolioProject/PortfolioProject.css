@@ -4,7 +4,7 @@
 }
 
 .portfolio__project:not(:last-child) {
-  border-bottom: 1px solid #424242;
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 9px;
 }
 

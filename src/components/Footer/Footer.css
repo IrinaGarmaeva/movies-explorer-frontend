@@ -5,7 +5,7 @@
 }
 
 .footer__text {
-  color: #8b8b8b;
+  color: var(--color-light-dark);
   text-align: center;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 13px;
@@ -17,12 +17,12 @@
 .footer__container {
   display: flex;
   justify-content: space-between;
-  color: #fff;
+  color: var(--color-white);
   font-feature-settings: "clig" off, "liga" off;
   font-size: 13px;
   font-weight: 400;
   line-height: normal;
-  border-top: 1px solid #424242;
+  border-top: 1px solid var(--color-border);
 }
 
 .footer__copyright {

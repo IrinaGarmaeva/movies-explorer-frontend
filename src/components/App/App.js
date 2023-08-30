@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,10 +11,12 @@ import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="root">
       <div className="page">
-        {/* <Header /> */}
+        <Header isLoggedIn={isLoggedIn}/>
         <Routes>
           <Route path="/" element={
             <>
