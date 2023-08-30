@@ -49,11 +49,8 @@ const Register = () => {
       </form>
       <div className="auth__login">
         <p className="auth__login-text">Уже зарегистрированы?</p>
-        <a href="#" className="auth__login-button">Войти</a>
+        <Link to="/signin" className="auth__login-button">Войти</Link>
       </div>
-      {/* <Link to="/sign-in" className="auth__login">
-        Уже зарегистрированы? Войти
-      </Link> */}
     </div>
   );
 };
