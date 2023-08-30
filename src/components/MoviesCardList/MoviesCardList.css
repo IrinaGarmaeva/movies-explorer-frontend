@@ -9,6 +9,8 @@
   grid-template-columns: repeat(auto-fit, 360px);
   grid-template-rows: repeat(auto-fit, 319px);
   gap: 32px 28px;
+  justify-content: center;
+  align-items: center;
 }
 
 .cards__button {
@@ -28,4 +30,32 @@
 .cards__button:hover {
   background: var(--color-green);
   color: var(--color-black);
+}
+
+@media (max-width: 890px) {
+  .cards{
+    padding: 80px 30px;
+  }
+
+  .cards__container {
+    grid-template-columns: repeat(auto-fit, 342px);
+    grid-template-rows: repeat(auto-fit, 309px);
+    gap: 35px 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .cards{
+    padding: 50px 10px 80px 10px;
+  }
+
+  .cards__container {
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-rows: repeat(auto-fit, 271px);
+    row-gap: 16px;
+  }
+
+  .cards__button {
+    margin-top: 50px;
+  }
 }

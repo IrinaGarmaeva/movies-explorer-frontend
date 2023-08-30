@@ -64,4 +64,48 @@
   background: var(--color-btn-bg);
 }
 
+@media (max-width: 890px) {
+  .card {
+    max-width: 342px;
+    max-height: 309px;
+  }
 
+  .card__title {
+    max-width: 224px;
+  }
+
+  .card__image {
+    height: 190px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding: 14px 0;
+    max-width: 300px;
+    max-height: 271px;
+  }
+
+  .card__header {
+    padding: 0 14px 14px 14px;
+  }
+
+  .card__title {
+    max-width: 200px;
+    font-size: 12px;
+    line-height: 150%;
+  }
+
+  .card__duration {
+    font-size: 12px;
+    line-height: 150%;
+  }
+
+  .card__image {
+    height: 168px;
+  }
+
+  .card__button {
+    margin-top: 14px;
+  }
+}
