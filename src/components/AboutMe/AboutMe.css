@@ -72,7 +72,7 @@
   }
 
   .aboutMe__info {
-    width: 47,39%;
+    width: 47.39%;
   }
 
   .aboutMe__info-name {
@@ -105,10 +105,6 @@
 }
 
 @media (max-width: 740px) {
-  .aboutMe__info {
-    width: 100%;
-  }
-
   .aboutMe__photo {
     max-width: 220px;
     max-height: 265px;
@@ -117,7 +113,11 @@
 
 @media (max-width: 600px) {
   .aboutMe {
-    padding: 70px 14px;
+    padding: 70px 50px;
+  }
+
+  .aboutMe__info {
+    width: 100%;
   }
 
   .aboutMe__title {
@@ -164,5 +164,11 @@
 
   .aboutMe__links {
     margin-top: 40px;
+  }
+}
+
+@media (max-width: 550px) {
+  .aboutMe {
+    padding: 70px 14px;
   }
 }

@@ -41,14 +41,7 @@
   width: 100px;
   height: 52px;
   border: none;
-  transition: 0.7s ease;
 }
-
-.search__button:hover {
-  background: var(--color-green);
-  color: var(--color-black);
-}
-
 
 @media (max-width: 800px) {
   .search {

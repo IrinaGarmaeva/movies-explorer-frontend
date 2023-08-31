@@ -1,4 +1,5 @@
 import "./SearchForm.css";
+import Button from "../Button/Button";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = () => {
@@ -13,7 +14,7 @@ const SearchForm = () => {
           // onChange={handleChange}
           minLength='2'
         />
-        <button type="button" className="search__button">Поиск</button>
+        <Button className={'search__button'} type={'button'} text={'Поиск'}/>
       </form>
       <FilterCheckbox />
     </div>

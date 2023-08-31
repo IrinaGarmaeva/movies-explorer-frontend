@@ -70,12 +70,6 @@
   line-height: 121.428%;
   padding: 13px 126px 15px 124px;
   border: none;
-  transition: 0.7s ease;
-}
-
-.register__button:hover {
-  background: var(--color-green);
-  color: var(--color-black);
 }
 
 .register__login {

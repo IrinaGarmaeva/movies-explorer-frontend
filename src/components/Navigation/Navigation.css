@@ -9,6 +9,14 @@
   flex-direction: row;
 }
 
+.nav_color_blue {
+  background: var(--color-dark-blue);
+}
+
+.nav_color_dark {
+  background: var(--color-background-dark);
+}
+
 .nav__list {
   display: flex;
   flex-direction: row;
@@ -106,7 +114,6 @@
     align-items: center;
     width: 67.7%;
     height: 100vh;
-    background-color: var(--color-background-dark);
     z-index: 10;
   }
 

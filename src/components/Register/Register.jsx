@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import './Register.css';
+import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
 import logo from '../../images/logo.svg'
 
@@ -25,7 +26,7 @@ const Register = () => {
             value={values.name || ''}
             onChange={handleChange}
             name="name"
-            type="name"
+            type="text"
             className="register__input"
             // placeholder="Введите ваше имя"
             required
@@ -51,9 +52,7 @@ const Register = () => {
             required
           ></input>
         </fieldset>
-        <button className="register__button">
-          {isLoading ? "Регистрация ... " : "Зарегистрироваться"}
-        </button>
+        <Button className={'register__button'} type={'submit'} text={isLoading ? "Регистрация ... " : "Зарегистрироваться"} />
       </form>
       <div className="register__login">
         <p className="register__login-text">Уже зарегистрированы?</p>

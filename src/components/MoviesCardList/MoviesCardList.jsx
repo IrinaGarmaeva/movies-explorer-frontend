@@ -1,5 +1,5 @@
-
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Button from '../Button/Button';
 import movies from '../../utils/consts';
 import './MoviesCardList.css';
 
@@ -11,7 +11,7 @@ const MoviesCardList = () => {
           return <MoviesCard key={item.id} card={item} />;
         })}
       </div>
-      <button type='button' className='cards__button'>Ещё</button>
+      <Button className={'cards__button'} type={'button'} text={'Ещё'} />
     </section>
   )
 }

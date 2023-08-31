@@ -71,15 +71,6 @@ a {
   min-height: 100vh;
 }
 
-.button {
-  opacity: 1;
-  transition: 0.7s ease;
-  cursor: pointer;
-}
-
-.button:hover {
-  opacity: 0.8;
-}
 
 .link {
   opacity: 1;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
 import logo from '../../images/logo.svg'
 import './Login.css'
@@ -41,9 +42,7 @@ const Login = () => {
             required
           ></input>
         </fieldset>
-        <button className="login__button">
-          {isLoading ? "Вход ... " : "Войти"}
-        </button>
+        <Button className={'login__button'} type={'submit'} text={isLoading ? "Вход ... " : "Войти"} />
       </form>
       <div className="login__register">
         <p className="login__register-text">Ещё не зарегистрированы?</p>

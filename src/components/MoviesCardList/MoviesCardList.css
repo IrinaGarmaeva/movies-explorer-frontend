@@ -24,12 +24,6 @@
   font-weight: 500;
   line-height: 125%;
   border: none;
-  transition: 0.7s ease;
-}
-
-.cards__button:hover {
-  background: var(--color-green);
-  color: var(--color-black);
 }
 
 @media (max-width: 890px) {

@@ -71,12 +71,6 @@
   padding: 13px 126px 15px 124px;
   width: 100%;
   border: none;
-  transition: 0.7s ease;
-}
-
-.login__button:hover {
-  background: var(--color-green);
-  color: var(--color-black);
 }
 
 .login__register {

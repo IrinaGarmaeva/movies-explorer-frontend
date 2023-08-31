@@ -2,7 +2,7 @@ import './AboutProject.css'
 
 const AboutProject = () => {
   return (
-    <section className='aboutProject'>
+    <section className='aboutProject' aria-label="Страница с описанием проекта" id='aboutProject'>
       <h2 className='aboutProject__title'>О проекте</h2>
       <div className='aboutProject__container'>
         <div className='aboutProject__info'>

@@ -1,29 +1,27 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navigation.css";
+import Button from "../Button/Button";
 import profileIcon from "../../images/icon_profile.svg";
 
-const Navigation = ({ isLoggedIn, toggleMenu }) => {
-  // const [toggleMenu, setToggleMenu] = useState(false);
+const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
   const location = useLocation();
-  const windowInnerWidth = window.innerWidth;
-
+  console.log(location.pathname)
 
   return (
     <>
       {isLoggedIn ? (
         <>
-          <nav className="nav" id="menu">
+          <nav className={location.pathname === '/' ? 'nav nav_color_blue' : 'nav nav_color_dark'} id="menu">
             <ul className="nav__list">
-              {windowInnerWidth < 870 && (
-                <li className="nav__list-item link">
+              {toggleMenu && (
+                <li className="nav__list-item link" onClick={handleCloseMobileMenu}>
                   <Link to="/">Главная</Link>
                 </li>
               )}
-              <li className={location.pathname === '/movies' ? "nav__list-item nav__list-item_active link": "nav__list-item link"}>
+              <li className={location.pathname === '/movies' ? "nav__list-item nav__list-item_active link": "nav__list-item link"} onClick={handleCloseMobileMenu}>
                 <Link to="/movies">Фильмы</Link>
               </li>
-              <li className={location.pathname === '/saved-movies' ? "nav__list-item nav__list-item_active link" : "nav__list-item link"}>
+              <li className={location.pathname === '/saved-movies' ? "nav__list-item nav__list-item_active link" : "nav__list-item link"} onClick={handleCloseMobileMenu}>
                 <Link to="/saved-movies">Сохранённые фильмы</Link>
               </li>
             </ul>
@@ -53,7 +51,8 @@ const Navigation = ({ isLoggedIn, toggleMenu }) => {
             <a className="nav__link link" href="https://www.youtube.com/">
               Регистрация
             </a>
-            <button className="nav__button button">Войти</button>
+            <Button className={'nav__button'} text={'Войти'} type={'button'} />
+            {/* <button className="nav__button button">Войти</button> */}
           </div>
         </>
       )}

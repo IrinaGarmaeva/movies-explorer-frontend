@@ -12,40 +12,22 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const location = useLocation()
-  // console.log(location.pathname)
+  const location = useLocation();
+  const pathname = location.pathname
+  const headerRoutes = pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile'
+  const footerRoutes = pathname === '/' || pathname === 'movies' || pathname === '/saved-movies'
 
   const user = {
     name: 'Виталий',
     email: 'pochta@yandex.ru'
   }
 
-  // const headerRoutes = '/' || '/movies' || '/saved-movies' || '/profile';
-  // const renderHeader = () => {
-  //   console.log(location.pathname)
-  //   if (location.pathname === headerRoutes) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
-
-  // console.log(renderHeader)
-
-
   return (
     <div className="root">
       <div className="page">
-        {/* {renderHeader && (<Header isLoggedIn={isLoggedIn}/>)} */}
-        <Header isLoggedIn={isLoggedIn}/>
+        {headerRoutes ? <Header isLoggedIn={isLoggedIn}/> : ''}
         <Routes>
-          {/* <Route path={headerRoutes} element={<Header isLoggedIn={isLoggedIn}/>} /> */}
-          {/* <Route path="/" element={} /> */}
-          <Route path="/" index={true} element={
-            <>
-              <Main />
-            </>
-          }
+          <Route path="/" index={true} element={<Main />}
           />
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<Login />} />
@@ -54,7 +36,7 @@ function App() {
           <Route path="/profile" element={<Profile user={user}/>} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-        <Footer />
+        {footerRoutes ? <Footer /> : ''}
       </div>
     </div>
   );
