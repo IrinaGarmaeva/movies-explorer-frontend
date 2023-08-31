@@ -30,6 +30,9 @@ body {
   --color-btn-bg: #313131;
   --color-btn-dark: #2F2F2F;
   --color-pink: #EE3465;
+  --color-checkbox-dark: #343434;
+  --color-checkbox-light: #A0A0A0;
+  --color-btn-blue: #0F4157;
 }
 
 ul, ol {
@@ -68,13 +71,22 @@ a {
   min-height: 100vh;
 }
 
+.button {
+  opacity: 1;
+  transition: 0.7s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
 .link {
   opacity: 1;
   transition: 0.7s ease;
+  cursor: pointer;
 }
 
 .link:hover {
   opacity: 0.7;
-  transform: scale(1.06);
-  color: var(--color-green);
 }

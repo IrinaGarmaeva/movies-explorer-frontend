@@ -6,11 +6,11 @@ import logo from '../../images/logo.svg'
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { values, errors, handleChange } = useFormAndValidation();
+  const { values, errors, handleChange, resetForm } = useFormAndValidation();
 
   function handleSubmit (evt) {
     evt.preventDefault();
-    const { name, email, password, resetForm } = values;
+    const { name, email, password } = values;
     console.log("You sucessfully registered")
   }
 

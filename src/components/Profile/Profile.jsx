@@ -14,8 +14,9 @@ const Profile = ({user}) => {
         <p className='profile__info-value'>{user.email}</p>
         </div>
       </div>
-      <button className='profile__button profile__button_type_edit'>Редактировать</button>
-      <button className='profile__button profile__button_type_logout'>Выйти из аккаунта</button>
+      <button type='button' className='profile__button profile__button_type_edit link'>Редактировать</button>
+      <button type='button' className='profile__button profile__button_type_logout link'>Выйти из аккаунта</button>
+      {/* <button type='button' className='profile__button profile__button_type_save button'>Сохранить</button> */}
     </section>
   )
 }

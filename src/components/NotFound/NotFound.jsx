@@ -7,7 +7,7 @@ const NotFound = () => {
       <div className="notfound__block">
         <h2 className="notfound__title">404</h2>
         <p className="notfound__subtitle">Страница не найдена</p>
-        <Link to='/' className="notfound__button">Назад</Link>
+        <Link to='/' className="notfound__button link">Назад</Link>
       </div>
     </div>
   )
