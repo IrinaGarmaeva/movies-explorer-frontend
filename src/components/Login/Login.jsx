@@ -1,23 +1,20 @@
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
-import Logo from "../Logo/Logo";
-import Button from "../Button/Button";
-import useFormAndValidation from "../../hooks/useFormAndValidation";
+import Entry from "../Entry/Entry";
 import './Login.css'
-import logo from '../../images/logo.svg';
+
 
 const Login = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const { values, errors, handleChange, resetForm } = useFormAndValidation();
 
     function handleSubmit (evt) {
       evt.preventDefault();
-      const { email, password } = values;
       console.log("You sucessfully logged in")
     }
 
   return (
     <div className="login">
+        <Entry title={'Рады видеть!'} onSubmit={handleSubmit} buttonText={'Войти'} />
+      {/* <div className="login__container">
       <Logo />
       <h2 className="login__title">Рады видеть!</h2>
       <form className="login__form" onSubmit={handleSubmit}>
@@ -29,7 +26,7 @@ const Login = () => {
             name="email"
             type="email"
             className="login__input"
-            // placeholder="Email"
+            placeholder="Введите E-mail"
             required
           ></input>
           <label htmlFor="password" className="login__label">Пароль</label>
@@ -39,12 +36,13 @@ const Login = () => {
             name="password"
             type="password"
             className="login__input"
-            // placeholder="Пароль"
+            placeholder="Введите пароль"
             required
           ></input>
         </fieldset>
         <Button className={'login__button'} type={'submit'} text={isLoading ? "Вход ... " : "Войти"} />
       </form>
+      </div> */}
       <div className="login__register">
         <p className="login__register-text">Ещё не зарегистрированы?</p>
         <Link to="/signup" className="login__register-button link">Регистрация</Link>

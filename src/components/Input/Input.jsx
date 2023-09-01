@@ -1,15 +1,19 @@
-import React from "react";
-
-const Input = ({ value, name, type, className, onChange }) => {
+const Input = ({ labelClassName, labelText, value, name, type, inputClassName, placeholder, onChange }) => {
   return (
-    <input
-      value={value}
-      name={name}
-      type={type}
-      className={className}
-      onChange={onChange}
-      required
-    />
+    <>
+      <label htmlFor={name} className={labelClassName}>
+        {labelText}
+      </label>
+      <input
+        value={value}
+        name={name}
+        type={type}
+        className={inputClassName}
+        placeholder={placeholder}
+        onChange={onChange}
+        required
+      />
+    </>
   );
 };
 
