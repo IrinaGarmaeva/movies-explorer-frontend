@@ -16,10 +16,6 @@
   background: var(--color-dark-blue);
 }
 
-.header__logo {
-  width: 38px;
-}
-
 .nav__menu-icon {
   display: none;
   position: absolute;

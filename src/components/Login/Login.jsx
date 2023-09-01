@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
-import logo from '../../images/logo.svg'
 import './Login.css'
+import logo from '../../images/logo.svg';
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <img src={logo} alt="Логотип" className="login__logo"/>
+      <Logo />
       <h2 className="login__title">Рады видеть!</h2>
       <form className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">

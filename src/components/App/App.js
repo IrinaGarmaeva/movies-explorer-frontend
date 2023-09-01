@@ -9,9 +9,14 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
+import movies from "../../utils/consts";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [movies, setMovies] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage, setItemsPerPage] = useState(12);
+
   const location = useLocation();
   const pathname = location.pathname
   const headerRoutes = pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile'
@@ -21,6 +26,11 @@ function App() {
     name: 'Виталий',
     email: 'pochta@yandex.ru'
   }
+
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
+
 
   return (
     <div className="root">

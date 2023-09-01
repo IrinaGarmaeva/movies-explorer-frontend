@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import './Register.css';
+import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
-import logo from '../../images/logo.svg'
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,7 @@ const Register = () => {
 
   return (
     <div className="register">
-      <img src={logo} alt="Логотип" className="register__logo"/>
+      <Logo />
       <h2 className="register__title">Добро пожаловать!</h2>
       <form className="register__form" onSubmit={handleSubmit}>
         <fieldset className="register__fieldset">
@@ -31,6 +31,7 @@ const Register = () => {
             // placeholder="Введите ваше имя"
             required
           ></input>
+
           <label htmlFor="email" className="register__label">E-mail</label>
           <input
             value={values.email || ''}

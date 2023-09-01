@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./Header.css";
+import Logo from "../Logo/Logo";
 import Navigation from "../Navigation/Navigation";
-import logoImage from "../../images/logo.svg";
 import closeIcon from "../../images/icon_close.svg";
 import burgerMenuIcon from "../../images/icon_burger-menu.svg";
 
@@ -26,7 +26,7 @@ const Header = ({isLoggedIn}) => {
 
   return (
     <header className={location.pathname === '/' ? 'header header_color_blue' : 'header header_color_dark'} >
-      <Link to='/'><img src={logoImage} alt="Логотип" className="header__logo" /></Link>
+      <Logo />
       <Navigation isLoggedIn={isLoggedIn} toggleMenu={toggleMenu} handleCloseMobileMenu={handleCloseMobileMenu}/>
       {toggleMenu ? (
         <img

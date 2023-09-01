@@ -9,6 +9,8 @@ const Profile = ({ user }) => {
 
   const { values, errors, handleChange } = useFormAndValidation();
 
+
+
   return (
     <section className="profile">
       <h2 className="profile__title">Привет, {user.name}!</h2>
@@ -19,7 +21,7 @@ const Profile = ({ user }) => {
           </label>
           <input
             type="text"
-            value={user.name}
+            value={values.name || user.name}
             onChange={handleChange}
             name="name"
             className="profile__input"
@@ -31,7 +33,7 @@ const Profile = ({ user }) => {
           </label>
           <input
             type="email"
-            value={user.email}
+            value={values.email || user.email}
             onChange={handleChange}
             name="email"
             className="profile__input"
