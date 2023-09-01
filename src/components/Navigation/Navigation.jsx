@@ -10,7 +10,7 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
   return (
     <>
       {isLoggedIn ? (
-        <>
+        <div className="nav__overlay">
           <nav className={location.pathname === '/' ? 'nav nav_color_blue' : 'nav nav_color_dark'} id="menu">
             <ul className="nav__list">
               {toggleMenu && (
@@ -44,7 +44,7 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
               </div>
             </Link>
           </nav>
-        </>
+        </div>
       ) : (
         <>
           <div className="nav" id="menu">
@@ -52,7 +52,6 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
               Регистрация
             </a>
             <Button className={'nav__button'} text={'Войти'} type={'button'} />
-            {/* <button className="nav__button button">Войти</button> */}
           </div>
         </>
       )}
