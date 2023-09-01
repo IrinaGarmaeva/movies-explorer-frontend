@@ -9,10 +9,10 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import movies from "../../utils/consts";
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [movies, setMovies] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -25,6 +25,10 @@ function App() {
   const user = {
     name: 'Виталий',
     email: 'pochta@yandex.ru'
+  }
+
+  function toggleMenu () {
+    setIsLoggedIn(prevState => !prevState)
   }
 
   // const indexOfLastItem = currentPage * itemsPerPage;
@@ -40,10 +44,10 @@ function App() {
           <Route path="/" index={true} element={<Main />}
           />
           <Route path="/signup" element={<Register />} />
-          <Route path="/signin" element={<Login />} />
+          <Route path="/signin" element={<Login toggleMenu={toggleMenu}/>} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile user={user}/>} />
+          <Route path="/profile" element={<Profile user={user} toggleMenu={toggleMenu}/>} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         {footerRoutes ? <Footer /> : ''}
