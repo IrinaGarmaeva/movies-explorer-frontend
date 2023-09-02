@@ -20,7 +20,7 @@ function App() {
   const location = useLocation();
   const pathname = location.pathname
   const headerRoutes = pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile'
-  const footerRoutes = pathname === '/' || pathname === 'movies' || pathname === '/saved-movies'
+  const footerRoutes = pathname === '/' || pathname === '/movies' || pathname === '/saved-movies'
 
   const user = {
     name: 'Виталий',

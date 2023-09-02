@@ -13,8 +13,8 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
           <nav
             className={
               location.pathname === "/"
-                ? "nav nav_color_blue"
-                : "nav nav_color_dark"
+                ? "nav nav_type_hidden nav_color_blue"
+                : "nav nav_type_hidden nav_color_dark"
             }
             id="menu"
           >
@@ -24,7 +24,7 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
                   className={
                     location.pathname === "/"
                       ? "nav__list-item nav__list-item_active link"
-                      : ""
+                      : "nav__list-item link"
                   }
                   onClick={handleCloseMobileMenu}
                 >

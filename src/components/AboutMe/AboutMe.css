@@ -72,7 +72,8 @@
   }
 
   .aboutMe__info {
-    width: 47.39%;
+    /* width: 47.39%; */
+    max-width: 364px;
   }
 
   .aboutMe__info-name {

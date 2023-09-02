@@ -94,6 +94,14 @@
     padding-bottom: 92px;
   }
 
+  .aboutProject__timeline_type_backend {
+    width: 20.958%
+  }
+
+  .aboutProject__timeline_type_other {
+    width: 79.042%
+  }
+
   .aboutProject__info:not(:last-child) {
     margin-right: 36px;
   }

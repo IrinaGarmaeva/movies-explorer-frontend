@@ -29,6 +29,18 @@
   top: 22.44px;
 }
 
+/* .nav__menu-icon_type_close {
+  position: fixed;
+  right: 22.44px;
+  top: 22.44px;
+  background-image: url('../../images/icon_close.svg');
+  background-size: 22px 22px;
+  border: none;
+  width: 22px;
+  height: 22px;
+  background-color: var(--color-dark-blue);
+} */
+
 @media (max-width: 870px) {
   .header {
     padding: 0 30px;

@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import Entry from "../Entry/Entry";
 
 const Register = () => {
+  const navigate = useNavigate()
 
   function handleSubmit(evt) {
     evt.preventDefault();
     console.log("You sucessfully registered");
+    navigate('/signin', { replace: true });
   }
 
   return (

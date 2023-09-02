@@ -95,15 +95,7 @@
     height: 100vh;
   }
 
-  .nav__link {
-    display: none;
-  }
-
-  .nav__button {
-    display: none;
-  }
-
-  .nav {
+  .nav_type_hidden {
     display: none;
   }
 
@@ -146,7 +138,7 @@
 }
 
 @media (max-width: 450px) {
-  .nav {
+  .nav_type_hidden {
     width: 100%;
   }
 
