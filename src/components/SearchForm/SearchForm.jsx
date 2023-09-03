@@ -13,10 +13,11 @@ const SearchForm = () => {
           // value={}
           // onChange={handleChange}
           minLength='2'
+          required
         />
         <Button className={'search__button'} type={'button'} text={'Поиск'}/>
+        <FilterCheckbox />
       </form>
-      <FilterCheckbox />
     </div>
   );
 };

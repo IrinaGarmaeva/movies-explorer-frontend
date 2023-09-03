@@ -3,13 +3,13 @@ import './NotFound.css';
 
 const NotFound = () => {
   return (
-    <div className="notfound">
+    <section className="notfound">
       <div className="notfound__block">
-        <h2 className="notfound__title">404</h2>
+        <h1 className="notfound__title">404</h1>
         <p className="notfound__subtitle">Страница не найдена</p>
         <Link to='/' className="notfound__button link">Назад</Link>
       </div>
-    </div>
+    </section>
   )
 }
 

@@ -14,7 +14,7 @@ const Entry = ({ title, onSubmit, buttonText }) => {
   return (
     <div className="entry__container">
       <Logo />
-      <h2 className="entry__title">{title}</h2>
+      <h1 className="entry__title">{title}</h1>
       <form className="entry__form" onSubmit={onSubmit} noValidate>
         <fieldset className="entry__fieldset">
           <Input

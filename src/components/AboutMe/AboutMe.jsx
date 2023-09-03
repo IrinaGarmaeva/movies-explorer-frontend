@@ -38,7 +38,7 @@ const AboutMe = () => {
         </div>
         <img
           src={aboutMePhoto}
-          alt="Личная фотография"
+          alt="Портрет Ирины Гармаевой"
           className="aboutMe__photo"
         />
       </div>

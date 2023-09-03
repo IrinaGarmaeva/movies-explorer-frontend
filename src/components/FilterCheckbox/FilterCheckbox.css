@@ -12,6 +12,7 @@
   background-color: var(--color-checkbox-dark);
   border-radius: 20px;
   transition: all 0.4s;
+  cursor: pointer;
 }
 
 

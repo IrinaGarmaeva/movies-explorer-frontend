@@ -13,10 +13,10 @@ const Movies = () => {
   // const movies320 = movies.slice(0, 6);
 
   return (
-    <div>
+    <>
       <SearchForm />
       <MoviesCardList movies={movies} />
-    </div>
+    </>
   )
 }
 

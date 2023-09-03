@@ -18,7 +18,7 @@ const MoviesCardList = ({ movies }) => {
 
   return (
     <section className="cards" aria-label="Секция с карточками фильмов">
-      <div className="cards__container">
+      <ul className="cards__container">
         {location.pathname === "/movies" && (
           <>
             {condition1280 && (
@@ -51,7 +51,7 @@ const MoviesCardList = ({ movies }) => {
             })}
           </>
         )}
-      </div>
+      </ul>
       {(condition1280 || condition768 || condition320) && (
         <Button className={"cards__button"} type={"button"} text={"Ещё"} />
       )}

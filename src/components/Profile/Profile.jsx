@@ -28,6 +28,8 @@ const Profile = ({ user, toggleMenu }) => {
             onChange={handleChange}
             name={"name"}
             inputClassName={"profile__input"}
+            minLength={2}
+            maxLength={40}
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -39,12 +41,14 @@ const Profile = ({ user, toggleMenu }) => {
             onChange={handleChange}
             name={"email"}
             inputClassName={"profile__input"}
+            minLength={4}
+            maxLength={40}
           />
         </fieldset>
         {editProfile ? (
           <Button
             className={"profile__button profile__button_type_save"}
-            type={"button"}
+            type={"submit"}
             text={"Сохранить"}
             onClick={() => setEditProfile(false)}
           />

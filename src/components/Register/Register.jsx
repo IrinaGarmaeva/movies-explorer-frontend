@@ -12,7 +12,7 @@ const Register = () => {
   }
 
   return (
-    <div className="register">
+    <section className="register">
       <Entry title={'Добро пожаловать!'} onSubmit={handleSubmit} buttonText={'Зарегистрироваться'} />
       <div className="register__login">
         <p className="register__login-text">Уже зарегистрированы?</p>
@@ -20,7 +20,7 @@ const Register = () => {
           Войти
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

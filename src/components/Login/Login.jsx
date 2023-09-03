@@ -13,7 +13,7 @@ const Login = ({ toggleMenu }) => {
   }
 
   return (
-    <div className="login">
+    <section className="login">
       <Entry
         title={"Рады видеть!"}
         onSubmit={handleSubmit}
@@ -25,7 +25,7 @@ const Login = ({ toggleMenu }) => {
           Регистрация
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,4 +1,4 @@
-.portfolio__project {
+.portfolio__project a {
   display: flex;
   justify-content: space-between;
 }

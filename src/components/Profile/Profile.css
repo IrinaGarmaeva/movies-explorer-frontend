@@ -52,6 +52,7 @@
 }
 
 .profile__input {
+  padding: 0;
   color: var(--color-white);
   font-size: 11px;
   font-weight: 500;
@@ -59,10 +60,14 @@
   text-align: right;
   border: none;
   background-color: transparent;
+  width: 50%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-background-dark);
 }
 
 .profile__input:focus {
-  outline: none;
+  outline: 1px solid var(--color-gray);
+  color: var(--color-green);
 }
 
 .profile__button {

@@ -11,15 +11,15 @@ const MoviesCard = ({ card }) => {
   const baseUrl = "https://api.nomoreparties.co";
 
   return (
-    <div className="card">
+    <li className="card">
       <div className="card__header">
-        <p className="card__title">{card.nameRU}</p>
+        <h2 className="card__title">{card.nameRU}</h2>
         <p className="card__duration">{`${hours}ч ${minutes}м`}</p>
       </div>
       <img
         className="card__image"
         src={`${baseUrl}/${card.image.url}`}
-        alt="Постер фильма"
+        alt={`Постер фильма ${card.nameRU}`}
       />
       {location.pathname === "/saved-movies" ? (
         <Button
@@ -46,7 +46,7 @@ const MoviesCard = ({ card }) => {
           )}
         </>
       )}
-    </div>
+    </li>
   );
 };
 
