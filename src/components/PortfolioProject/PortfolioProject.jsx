@@ -11,9 +11,6 @@ const PortfolioProject = ({ url, title }) => {
         <h2 className="portfolio__project-name">{title}</h2>
         <p
           className="portfolio__project-arrow link"
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           ↗
         </p>

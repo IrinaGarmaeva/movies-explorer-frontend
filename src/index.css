@@ -64,6 +64,12 @@ a {
   margin: 0 auto;
   box-sizing: border-box;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
 }
 
 .link {

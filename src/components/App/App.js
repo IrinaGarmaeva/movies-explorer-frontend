@@ -43,7 +43,7 @@ function App() {
     <div className="root">
       <div className="page">
         {headerRoutes ? <Header isLoggedIn={isLoggedIn} /> : ""}
-        <main>
+        <main className="main">
           <Routes>
             <Route path="/" index={true} element={<Main />} />
             <Route path="/signup" element={<Register />} />
