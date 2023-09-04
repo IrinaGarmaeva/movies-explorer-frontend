@@ -4,7 +4,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = () => {
   return (
-    <div className="search">
+    <section className="search">
       <form className="search__form" autoComplete="off">
         <input
           type="text"
@@ -18,7 +18,7 @@ const SearchForm = () => {
         <Button className={'search__button'} type={'button'} text={'Поиск'}/>
         <FilterCheckbox />
       </form>
-    </div>
+    </section>
   );
 };
 

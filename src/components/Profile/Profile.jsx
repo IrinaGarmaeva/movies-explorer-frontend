@@ -17,7 +17,7 @@ const Profile = ({ user, toggleMenu }) => {
 
   return (
     <section className="profile">
-      <h2 className="profile__title">Привет, {user.name}!</h2>
+      <h1 className="profile__title">Привет, {user.name}!</h1>
       <form className="profile__form">
         <fieldset className="profile__fieldset">
           <Input
@@ -30,6 +30,7 @@ const Profile = ({ user, toggleMenu }) => {
             inputClassName={"profile__input"}
             minLength={2}
             maxLength={40}
+            placeholder={'Введите своё имя'}
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -43,6 +44,7 @@ const Profile = ({ user, toggleMenu }) => {
             inputClassName={"profile__input"}
             minLength={4}
             maxLength={40}
+            placeholder={'Введите свой e-mail'}
           />
         </fieldset>
         {editProfile ? (
