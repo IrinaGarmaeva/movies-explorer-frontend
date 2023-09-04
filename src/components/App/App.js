@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -12,12 +13,16 @@ import NotFound from "../NotFound/NotFound";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
+  const [isLoading, setIsLoading] = useState(false);
   // const [movies, setMovies] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [itemsPerPage, setItemsPerPage] = useState(12);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const pathname = location.pathname;
+
   const headerRoutes =
     pathname === "/" ||
     pathname === "/movies" ||
@@ -31,6 +36,17 @@ function App() {
     email: "pochta@yandex.ru",
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserdata()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(`Error: ${error.status}`));
+    }
+  }, [isLoggedIn]);
+
   function toggleMenu() {
     setIsLoggedIn((prevState) => !prevState);
   }
@@ -39,6 +55,55 @@ function App() {
   // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   // const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
 
+  function checkToken() {
+    mainApi
+      .getToken()
+      .then((res) => {
+        if (!res) {
+          return;
+        }
+        if (res.status !== 401) {
+          setIsLoggedIn(true);
+          navigate(location.pathname);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoggedIn(false);
+      });
+  }
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  function handleRegister(name, email, password) {
+    setIsLoading(true);
+    mainApi
+      .registerUser(name, email, password)
+      .then((res) => {
+        console.log(res);
+        navigate("/signin", { replace: true });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleLogin(email, password) {
+    if (!email || !password) {
+      return;
+    }
+
+    setIsLoading(true);
+    mainApi
+      .loginUser(email, password)
+      .then((res) => {
+        console.log(res);
+        setIsLoggedIn(true);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="root">
       <div className="page">
@@ -46,8 +111,11 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" index={true} element={<Main />} />
-            <Route path="/signup" element={<Register />} />
-            <Route path="/signin" element={<Login toggleMenu={toggleMenu} />} />
+            <Route
+              path="/signup"
+              element={<Register onRegister={handleRegister} />}
+            />
+            <Route path="/signin" element={<Login onLogin={handleLogin} />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/saved-movies" element={<SavedMovies />} />
             <Route
