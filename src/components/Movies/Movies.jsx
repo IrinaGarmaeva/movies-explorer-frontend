@@ -1,7 +1,7 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import movies from '../../utils/consts';
+import {movies} from '../../utils/consts';
 
 const Movies = () => {
   // const windowWidth = window.innerWidth

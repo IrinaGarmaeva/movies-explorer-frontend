@@ -1,4 +1,9 @@
-const movies = [
+// Patterns
+export const PATTERN_USERNAME = "/[^a-zа-яё ]/iu";
+export const PATTERN_EMAIL = '';
+export const PATTERN_PASSWORD = '';
+
+export const movies = [
   {
     "id": 1,
     "nameRU": "«Роллинг Стоунз» в изгнании",
@@ -606,5 +611,3 @@ const movies = [
   }
 }
 ]
-
-export default movies

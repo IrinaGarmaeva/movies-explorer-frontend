@@ -60,8 +60,8 @@ class MainApi {
 
   // User log out
   async logout(){
-    const response = await fetch(`${this._baseUrl}`, {
-      method: 'GET',
+    const response = await fetch(`${this._baseUrl}/signout`, {
+      // method: 'GET',
       headers: this._headers,
       credentials: 'include',
     });

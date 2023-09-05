@@ -1,12 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Register.css";
 import Entry from "../Entry/Entry";
 import Input from "../Input/Input";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
+import { PATTERN_USERNAME, PATTERN_EMAIL, PATTERN_PASSWORD } from '../../utils/consts';
 
 const Register = ({ onRegister }) => {
   const { values, errors, handleChange, resetForm } = useFormAndValidation();
-  const location = useLocation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -32,6 +32,7 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваше имя"}
             onChange={handleChange}
+            pattern={PATTERN_USERNAME}
           />
           <Input
             labelClassName={"entry__label"}
@@ -42,6 +43,7 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваш E-mail"}
             onChange={handleChange}
+            pattern={PATTERN_EMAIL}
           />
           <Input
             labelClassName={"entry__label"}
@@ -52,6 +54,7 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Не короче 8 букв и цифр"}
             onChange={handleChange}
+            pattern={PATTERN_PASSWORD}
           />
         </>
       </Entry>

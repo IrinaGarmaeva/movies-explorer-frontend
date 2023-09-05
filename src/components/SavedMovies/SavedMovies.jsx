@@ -1,7 +1,7 @@
 import './SavedMovies.css'
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import movies from '../../utils/consts';
+import {movies} from '../../utils/consts';
 
 
 const SavedMovies = () => {

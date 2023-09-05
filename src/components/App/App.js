@@ -10,6 +10,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -88,7 +89,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleLogin(email, password) {
+  function handleLogIn(email, password) {
     if (!email || !password) {
       return;
     }
@@ -100,6 +101,16 @@ function App() {
         console.log(res);
         setIsLoggedIn(true);
         navigate("/movies", { replace: true });
+      })
+
+  }
+
+  function handleLogOut() {
+    mainApi
+      .logout()
+      .then(() => {
+        setIsLoggedIn(false);
+        navigate('/', {replace: true});
       })
       .catch((err) => console.log(err));
   }
@@ -115,12 +126,12 @@ function App() {
               path="/signup"
               element={<Register onRegister={handleRegister} />}
             />
-            <Route path="/signin" element={<Login onLogin={handleLogin} />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/saved-movies" element={<SavedMovies />} />
+            <Route path="/signin" element={<Login onLogin={handleLogIn} />} />
+            <Route path="/movies" element={<ProtectedRoute element={<Movies />} isLoggedIn={isLoggedIn}/>} />
+            <Route path="/saved-movies" element={<ProtectedRoute element={<SavedMovies />} isLoggedIn={isLoggedIn} />} />
             <Route
               path="/profile"
-              element={<Profile user={user} toggleMenu={toggleMenu} />}
+              element={<ProtectedRoute element={<Profile user={user} toggleMenu={toggleMenu} onSignOut={handleLogOut}/>} isLoggedIn={isLoggedIn} />}
             />
             <Route path="/*" element={<NotFound />} />
           </Routes>

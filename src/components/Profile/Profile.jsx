@@ -5,14 +5,14 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
 
-const Profile = ({ user, toggleMenu }) => {
+const Profile = ({ user, toggleMenu, onSignOut }) => {
   const [editProfile, setEditProfile] = useState(false);
   const { values, errors, handleChange } = useFormAndValidation();
   const navigate = useNavigate();
 
   function logOut() {
     toggleMenu();
-    navigate("/", { replace: true });
+    onSignOut();
   }
 
   return (
