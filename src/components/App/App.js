@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -15,9 +16,9 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
+  const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [isRegister, setIsRegister] = useState(null)
+  const [isRegister, setIsRegister] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   // const [movies, setMovies] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
@@ -35,17 +36,22 @@ function App() {
   const footerRoutes =
     pathname === "/" || pathname === "/movies" || pathname === "/saved-movies";
 
-  const user = {
-    name: "Виталий",
-    email: "pochta@yandex.ru",
-  };
+  // const user = {
+  //   name: "Виталий",
+  //   email: "pochta@yandex.ru",
+  // };
 
   useEffect(() => {
     if (isLoggedIn) {
       mainApi
         .getUserdata()
-        .then((res) => {
-          console.log(res);
+        .then((userData) => {
+          console.log(userData);
+          setCurrentUser({
+            ...userData,
+            name: userData.name,
+            email: userData.email
+          })
         })
         .catch((error) => console.log(`Error: ${error.status}`));
     }
@@ -60,7 +66,6 @@ function App() {
   // const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
 
   const closePopup = () => setIsInfoPopupOpen(false);
-
 
   function checkToken() {
     mainApi
@@ -103,14 +108,11 @@ function App() {
     }
 
     setIsLoading(true);
-    mainApi
-      .loginUser(email, password)
-      .then((res) => {
-        console.log(res);
-        setIsLoggedIn(true);
-        navigate("/movies", { replace: true });
-      })
-
+    mainApi.loginUser(email, password).then((res) => {
+      console.log(res);
+      setIsLoggedIn(true);
+      navigate("/movies", { replace: true });
+    });
   }
 
   function handleLogOut() {
@@ -118,36 +120,69 @@ function App() {
       .logout()
       .then(() => {
         setIsLoggedIn(false);
-        navigate('/', {replace: true});
+        navigate("/", { replace: true });
       })
       .catch((err) => console.log(err));
   }
 
   return (
-    <div className="root">
-      <div className="page">
-        {headerRoutes ? <Header isLoggedIn={isLoggedIn} /> : ""}
-        <main className="main">
-          <Routes>
-            <Route path="/" index={true} element={<Main />} />
-            <Route
-              path="/signup"
-              element={<Register onRegister={handleRegister} />}
-            />
-            <Route path="/signin" element={<Login onLogin={handleLogIn} />} />
-            <Route path="/movies" element={<ProtectedRoute element={<Movies />} isLoggedIn={isLoggedIn}/>} />
-            <Route path="/saved-movies" element={<ProtectedRoute element={<SavedMovies />} isLoggedIn={isLoggedIn} />} />
-            <Route
-              path="/profile"
-              element={<ProtectedRoute element={<Profile user={user} toggleMenu={toggleMenu} onSignOut={handleLogOut}/>} isLoggedIn={isLoggedIn} />}
-            />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </main>
-        {footerRoutes ? <Footer /> : ""}
-        <InfoPopup isOpen={isInfoPopupOpen} onClose={closePopup} isSucess={isRegister} />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="root">
+        <div className="page">
+          {headerRoutes ? <Header isLoggedIn={isLoggedIn} /> : ""}
+          <main className="main">
+            <Routes>
+              <Route path="/" index={true} element={<Main />} />
+              <Route
+                path="/signup"
+                element={<Register onRegister={handleRegister} />}
+              />
+              <Route path="/signin" element={<Login onLogin={handleLogIn} />} />
+              <Route
+                path="/movies"
+                element={
+                  <ProtectedRoute
+                    element={<Movies />}
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
+              />
+              <Route
+                path="/saved-movies"
+                element={
+                  <ProtectedRoute
+                    element={<SavedMovies />}
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute
+                    element={
+                      <Profile
+                        user={currentUser}
+                        toggleMenu={toggleMenu}
+                        onSignOut={handleLogOut}
+                      />
+                    }
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
+              />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </main>
+          {footerRoutes ? <Footer /> : ""}
+          <InfoPopup
+            isOpen={isInfoPopupOpen}
+            onClose={closePopup}
+            isSucess={isRegister}
+          />
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 
