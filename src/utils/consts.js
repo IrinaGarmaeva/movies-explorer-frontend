@@ -1,7 +1,17 @@
 // Patterns
 export const PATTERN_USERNAME = "/[^a-zа-яё ]/iu";
-export const PATTERN_EMAIL = '';
-export const PATTERN_PASSWORD = '';
+// export const PATTERN_EMAIL = "^[a-zA-Z0-9\._%+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"";
+export const PATTERN_EMAIL = "[A-z0-9!#$%&'*+-/=?^_`{|]{1,64}@[A-z0-9-.]{2,253}\\.[A-z]{2,63}"
+
+// validation messages
+export const VALIDATION_MESSAGES = {
+  frontend: {
+    email: "Введите электронный адрес",
+    password: "Пароль должен быть не короче 8 букв и цифр",
+    name: "Имя должно быть от 2 до 30 симв., содержать только буквы, дефис или пробел",
+  }
+}
+
 
 export const movies = [
   {

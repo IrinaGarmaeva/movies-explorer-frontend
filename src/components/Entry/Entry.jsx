@@ -3,7 +3,7 @@ import "./Entry.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 
-const Entry = ({ title, children, onSubmit, buttonText }) => {
+const Entry = ({ title, children, onSubmit, buttonText, isValid }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -18,6 +18,7 @@ const Entry = ({ title, children, onSubmit, buttonText }) => {
           className={"entry__button"}
           type={"submit"}
           text={isLoading ? "Подождите ... " : buttonText}
+          disabled={isValid ? false : true}
         />
       </form>
     </div>

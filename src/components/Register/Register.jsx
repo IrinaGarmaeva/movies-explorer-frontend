@@ -3,10 +3,10 @@ import "./Register.css";
 import Entry from "../Entry/Entry";
 import Input from "../Input/Input";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
-import { PATTERN_USERNAME, PATTERN_EMAIL, PATTERN_PASSWORD } from '../../utils/consts';
+import { PATTERN_USERNAME, PATTERN_EMAIL, VALIDATION_MESSAGES } from '../../utils/consts';
 
 const Register = ({ onRegister }) => {
-  const { values, errors, handleChange, resetForm } = useFormAndValidation();
+  const { values, errors, handleChange, isValid, resetForm } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -21,6 +21,7 @@ const Register = ({ onRegister }) => {
         title={"Добро пожаловать!"}
         onSubmit={handleSubmit}
         buttonText={"Зарегистрироваться"}
+        isValid={isValid}
       >
         <>
           <Input
@@ -32,7 +33,9 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваше имя"}
             onChange={handleChange}
-            pattern={PATTERN_USERNAME}
+            // pattern={PATTERN_USERNAME}
+            errorClassName={'entry__input-error'}
+            errorMessage={errors.name ? VALIDATION_MESSAGES.frontend.name : ''}
           />
           <Input
             labelClassName={"entry__label"}
@@ -43,7 +46,9 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваш E-mail"}
             onChange={handleChange}
-            pattern={PATTERN_EMAIL}
+            // pattern={PATTERN_EMAIL}
+            errorClassName={'entry__input-error'}
+            errorMessage={errors.email ? VALIDATION_MESSAGES.frontend.email : ''}
           />
           <Input
             labelClassName={"entry__label"}
@@ -54,7 +59,8 @@ const Register = ({ onRegister }) => {
             inputClassName={"entry__input"}
             placeholder={"Не короче 8 букв и цифр"}
             onChange={handleChange}
-            pattern={PATTERN_PASSWORD}
+            errorClassName={'entry__input-error'}
+            errorMessage={errors.password ? VALIDATION_MESSAGES.frontend.password : ""}
           />
         </>
       </Entry>

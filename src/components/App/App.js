@@ -10,12 +10,15 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
+import InfoPopup from "../InfoPopup/InfoPopup";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [isRegister, setIsRegister] = useState(null)
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   // const [movies, setMovies] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -56,6 +59,9 @@ function App() {
   // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   // const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
 
+  const closePopup = () => setIsInfoPopupOpen(false);
+
+
   function checkToken() {
     mainApi
       .getToken()
@@ -84,6 +90,8 @@ function App() {
       .registerUser(name, email, password)
       .then((res) => {
         console.log(res);
+        setIsRegister(true);
+        setIsInfoPopupOpen(true);
         navigate("/signin", { replace: true });
       })
       .catch((err) => console.log(err));
@@ -137,6 +145,7 @@ function App() {
           </Routes>
         </main>
         {footerRoutes ? <Footer /> : ""}
+        <InfoPopup isOpen={isInfoPopupOpen} onClose={closePopup} isSucess={isRegister} />
       </div>
     </div>
   );

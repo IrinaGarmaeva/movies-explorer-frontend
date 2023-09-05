@@ -70,6 +70,10 @@
   color: var(--color-green);
 }
 
+.profile__input-span {
+  display: none;
+}
+
 .profile__button {
   text-align: center;
   font-size: 13px;

@@ -31,6 +31,7 @@ const Profile = ({ user, toggleMenu, onSignOut }) => {
             minLength={2}
             maxLength={40}
             placeholder={'Введите своё имя'}
+            errorClassName={'profile__input-span'}
           />
         </fieldset>
         <fieldset className="profile__fieldset">
@@ -45,6 +46,7 @@ const Profile = ({ user, toggleMenu, onSignOut }) => {
             minLength={4}
             maxLength={40}
             placeholder={'Введите свой e-mail'}
+            errorClassName={'profile__input-span'}
           />
         </fieldset>
         {editProfile ? (

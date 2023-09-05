@@ -3,9 +3,10 @@ import Entry from "../Entry/Entry";
 import Input from "../Input/Input";
 import "./Login.css";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
+import { PATTERN_EMAIL, VALIDATION_MESSAGES } from '../../utils/consts';
 
 const Login = ({ onLogin }) => {
-  const { values, errors, handleChange, resetForm } = useFormAndValidation();
+  const { values, errors, handleChange, isValid, resetForm } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -20,6 +21,7 @@ const Login = ({ onLogin }) => {
         title={"Рады видеть!"}
         onSubmit={handleSubmit}
         buttonText={"Войти"}
+        isValid={isValid}
       >
         <Input
             labelClassName={"entry__label"}
@@ -30,6 +32,9 @@ const Login = ({ onLogin }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваш E-mail"}
             onChange={handleChange}
+            // pattern={PATTERN_EMAIL}
+            errorClassName={'entry__input-error'}
+            errorMessage={errors.email ? VALIDATION_MESSAGES.frontend.email : ''}
           />
           <Input
             labelClassName={"entry__label"}
@@ -40,6 +45,8 @@ const Login = ({ onLogin }) => {
             inputClassName={"entry__input"}
             placeholder={"Не короче 8 букв и цифр"}
             onChange={handleChange}
+            errorClassName={'entry__input-error'}
+            errorMessage={errors.password ? VALIDATION_MESSAGES.frontend.password : ''}
           />
       </Entry>
       <div className="login__register">

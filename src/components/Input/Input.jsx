@@ -1,4 +1,4 @@
-const Input = ({ labelClassName, labelText, value, name, type, inputClassName, placeholder, onChange, minLength, maxLength, pattern }) => {
+const Input = ({ labelClassName, labelText, value, name, type, inputClassName, placeholder, onChange, minLength, maxLength, pattern, errorClassName, errorMessage }) => {
   return (
     <>
       <label htmlFor={name} className={labelClassName}>
@@ -16,6 +16,7 @@ const Input = ({ labelClassName, labelText, value, name, type, inputClassName, p
         pattern={pattern}
         required
       />
+      <span className={errorClassName}>{errorMessage}</span>
     </>
   );
 };
