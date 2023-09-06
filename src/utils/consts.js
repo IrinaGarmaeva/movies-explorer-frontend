@@ -18,6 +18,8 @@ export const RESPONSE_MESSAGES = {
   successOnUpdateProfile: "Данные профиля успешно обновлены",
   errorEmail: "Пользователь с таким email уже существует",
   errorGeneral: "Что-то пошло не так! Попробуйте ещё раз",
+  successOnRegistration: "Вы успешно зарегистрировались!",
+  errorLogin: "Неправильные почта или пароль",
 }
 
 export const movies = [

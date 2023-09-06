@@ -11,11 +11,8 @@ const Register = ({ onRegister }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     const { name, email, password } = values;
-    onRegister(name, email, password);
-    resetForm()
+    onRegister(name, email, password, resetForm);
   }
-
-  console.log(isValid)
 
   return (
     <section className="register">

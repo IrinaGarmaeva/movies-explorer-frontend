@@ -13,13 +13,13 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import {RESPONSE_MESSAGES} from '../../utils/consts';
+import { RESPONSE_MESSAGES } from "../../utils/consts";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [isResponse, setIsResponse] = useState('');
+  const [isResponse, setIsResponse] = useState("");
   const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   // const [movies, setMovies] = useState([]);
@@ -90,7 +90,7 @@ function App() {
     checkToken();
   }, []);
 
-  function handleRegister(name, email, password) {
+  function handleRegister(name, email, password, resetForm) {
     setIsLoading(true);
     mainApi
       .registerUser(name, email, password)
@@ -98,30 +98,46 @@ function App() {
         console.log(res);
         setIsSuccessRequest(true);
         setIsLoggedIn(true);
-        setIsInfoPopupOpen(true);
+        setIsResponse(RESPONSE_MESSAGES.successOnRegistration);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
         console.log(err);
-        setIsInfoPopupOpen(true);
         setIsSuccessRequest(false);
+        if (err === "Ошибка: 409") {
+          return setIsResponse(RESPONSE_MESSAGES.errorEmail);
+        }
+        return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
       })
       .finally(() => {
         setIsLoading(false);
-      })
+        setIsInfoPopupOpen(true);
+        resetForm();
+      });
   }
 
   function handleLogIn(email, password) {
     if (!email || !password) {
       return;
     }
-
     setIsLoading(true);
-    mainApi.loginUser(email, password).then((res) => {
+    mainApi.loginUser(email, password)
+    .then((res) => {
       console.log(res);
       setIsLoggedIn(true);
       navigate("/movies", { replace: true });
-    });
+    })
+    .catch((err) => {
+      setIsInfoPopupOpen(true);
+      setIsSuccessRequest(false);
+      if(err === "Ошибка: 401") {
+        return setIsResponse(RESPONSE_MESSAGES.errorLogin);
+      }
+      return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
   }
 
   function handleLogOut() {
@@ -149,11 +165,11 @@ function App() {
         setIsResponse(RESPONSE_MESSAGES.successOnUpdateProfile);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         setIsSuccessRequest(false);
         // setCurrentUser(currentUser);
-        window.location.reload()
-        if(err === "Ошибка: 409") {
+        // window.location.reload()
+        if (err === "Ошибка: 409") {
           return setIsResponse(RESPONSE_MESSAGES.errorEmail);
         }
         return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
