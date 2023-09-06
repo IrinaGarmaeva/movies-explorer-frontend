@@ -12,6 +12,7 @@ const Login = ({ onLogin }) => {
     evt.preventDefault();
     const {email, password} = values;
     onLogin(email, password);
+    resetForm();
     console.log("You sucessfully logged in");
   }
 
@@ -32,7 +33,7 @@ const Login = ({ onLogin }) => {
             inputClassName={"entry__input"}
             placeholder={"Введите ваш E-mail"}
             onChange={handleChange}
-            // pattern={PATTERN_EMAIL}
+            pattern={PATTERN_EMAIL}
             errorClassName={'entry__input-error'}
             errorMessage={errors.email ? VALIDATION_MESSAGES.frontend.email : ''}
           />

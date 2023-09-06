@@ -30,9 +30,6 @@
   padding: 50px 0;
 }
 
-.popup__body {
-}
-
 .popup__close-btn {
   background-color: transparent;
   background-image: url('../../images/icon_close.svg');

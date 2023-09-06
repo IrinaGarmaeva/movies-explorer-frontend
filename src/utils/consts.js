@@ -1,17 +1,24 @@
 // Patterns
-export const PATTERN_USERNAME = "/[^a-zа-яё ]/iu";
-// export const PATTERN_EMAIL = "^[a-zA-Z0-9\._%+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"";
-export const PATTERN_EMAIL = "[A-z0-9!#$%&'*+-/=?^_`{|]{1,64}@[A-z0-9-.]{2,253}\\.[A-z]{2,63}"
+export const PATTERN_USERNAME = "^[A-Za-zА-Яа-я\- ]{2,30}$"
+export const PATTERN_EMAIL = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"
+export const PATTERN_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?!.*\s).{8,}$"
 
-// validation messages
+
+// Validation messages
 export const VALIDATION_MESSAGES = {
   frontend: {
-    email: "Введите электронный адрес",
+    email: "Введите адрес электронной почты",
     password: "Пароль должен быть не короче 8 букв и цифр",
     name: "Имя должно быть от 2 до 30 симв., содержать только буквы, дефис или пробел",
   }
 }
 
+// Response messages
+export const RESPONSE_MESSAGES = {
+  successOnUpdateProfile: "Данные профиля успешно обновлены",
+  errorEmail: "Пользователь с таким email уже существует",
+  errorGeneral: "Что-то пошло не так! Попробуйте ещё раз",
+}
 
 export const movies = [
   {

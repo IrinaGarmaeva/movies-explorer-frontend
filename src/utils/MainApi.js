@@ -21,7 +21,7 @@ class MainApi {
   }
 
   // Edit user data
-  async editUserdata({newName, newEmail}) {
+  async editUserdata(newName, newEmail) {
     const response = await fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,

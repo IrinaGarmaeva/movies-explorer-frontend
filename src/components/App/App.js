@@ -13,12 +13,14 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import {RESPONSE_MESSAGES} from '../../utils/consts';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [isRegister, setIsRegister] = useState(null);
+  const [isResponse, setIsResponse] = useState('');
+  const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   // const [movies, setMovies] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
@@ -46,12 +48,11 @@ function App() {
       mainApi
         .getUserdata()
         .then((userData) => {
-          console.log(userData);
           setCurrentUser({
             ...userData,
             name: userData.name,
-            email: userData.email
-          })
+            email: userData.email,
+          });
         })
         .catch((error) => console.log(`Error: ${error.status}`));
     }
@@ -95,11 +96,19 @@ function App() {
       .registerUser(name, email, password)
       .then((res) => {
         console.log(res);
-        setIsRegister(true);
+        setIsSuccessRequest(true);
+        setIsLoggedIn(true);
         setIsInfoPopupOpen(true);
-        navigate("/signin", { replace: true });
+        navigate("/movies", { replace: true });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsInfoPopupOpen(true);
+        setIsSuccessRequest(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleLogIn(email, password) {
@@ -120,9 +129,39 @@ function App() {
       .logout()
       .then(() => {
         setIsLoggedIn(false);
+        setCurrentUser({});
         navigate("/", { replace: true });
       })
       .catch((err) => console.log(err));
+  }
+
+  function updateUserInfo(name, email, resetForm) {
+    setIsLoading(true);
+    mainApi
+      .editUserdata(name, email)
+      .then((userData) => {
+        setCurrentUser({
+          ...userData,
+          name: userData.name,
+          email: userData.email,
+        });
+        setIsSuccessRequest(true);
+        setIsResponse(RESPONSE_MESSAGES.successOnUpdateProfile);
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsSuccessRequest(false);
+        // setCurrentUser(currentUser);
+        window.location.reload()
+        if(err === "Ошибка: 409") {
+          return setIsResponse(RESPONSE_MESSAGES.errorEmail);
+        }
+        return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsInfoPopupOpen(true);
+      });
   }
 
   return (
@@ -162,9 +201,11 @@ function App() {
                   <ProtectedRoute
                     element={
                       <Profile
-                        user={currentUser}
+                        currentUser={currentUser}
                         toggleMenu={toggleMenu}
+                        onEditProfile={updateUserInfo}
                         onSignOut={handleLogOut}
+                        isLoading={isLoading}
                       />
                     }
                     isLoggedIn={isLoggedIn}
@@ -178,7 +219,8 @@ function App() {
           <InfoPopup
             isOpen={isInfoPopupOpen}
             onClose={closePopup}
-            isSucess={isRegister}
+            isSucess={isSuccessRequest}
+            message={isResponse}
           />
         </div>
       </div>
