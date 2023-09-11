@@ -1,7 +1,7 @@
 .filter {
   display: flex;
   flex-direction: row;
-  margin-top: 26px;
+  /* margin-top: 26px; */
 }
 
 .filter__switch {
@@ -9,12 +9,11 @@
   display: inline-block;
   width: 36px;
   height: 20px;
-  background-color: var(--color-checkbox-dark);
+  background-color: var(--color-checkbox-dark); 
   border-radius: 20px;
   transition: all 0.4s;
   cursor: pointer;
 }
-
 
 .filter__switch::after {
   content: "";
@@ -22,18 +21,18 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--color-checkbox-light);
   top: 6px;
   left: 6px;
   transition: all 0.4s;
+  background-color: var(--color-checkbox-light);
 }
 
-.filter__checkbox:checked + .filter__switch::after {
+.filter__checkbox_active + .filter__switch::after {
   left: 20px;
   background-color: var(--color-white);
 }
 
-.filter__checkbox:checked + .filter__switch {
+.filter__checkbox_active + .filter__switch {
   background-color: var(--color-green);
 }
 

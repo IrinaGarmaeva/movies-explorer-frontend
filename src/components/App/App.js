@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -12,7 +13,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
-import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+
 import { RESPONSE_MESSAGES } from "../../utils/consts";
 
 function App() {
@@ -22,9 +23,6 @@ function App() {
   const [isResponse, setIsResponse] = useState("");
   const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-  // const [movies, setMovies] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [itemsPerPage, setItemsPerPage] = useState(12);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,11 +35,6 @@ function App() {
     pathname === "/profile";
   const footerRoutes =
     pathname === "/" || pathname === "/movies" || pathname === "/saved-movies";
-
-  // const user = {
-  //   name: "Виталий",
-  //   email: "pochta@yandex.ru",
-  // };
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -61,10 +54,6 @@ function App() {
   function toggleMenu() {
     setIsLoggedIn((prevState) => !prevState);
   }
-
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = movies.slice(indexOfFirstItem, indexOfLastItem);
 
   const closePopup = () => setIsInfoPopupOpen(false);
 
@@ -95,7 +84,6 @@ function App() {
     mainApi
       .registerUser(name, email, password)
       .then((res) => {
-        console.log(res);
         setIsSuccessRequest(true);
         setIsLoggedIn(true);
         setIsResponse(RESPONSE_MESSAGES.successOnRegistration);
@@ -123,7 +111,6 @@ function App() {
     setIsLoading(true);
     mainApi.loginUser(email, password)
     .then((res) => {
-      console.log(res);
       setIsLoggedIn(true);
       navigate("/movies", { replace: true });
     })
@@ -146,6 +133,7 @@ function App() {
       .then(() => {
         setIsLoggedIn(false);
         setCurrentUser({});
+        localStorage.clear();
         navigate("/", { replace: true });
       })
       .catch((err) => console.log(err));
@@ -167,8 +155,6 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsSuccessRequest(false);
-        // setCurrentUser(currentUser);
-        // window.location.reload()
         if (err === "Ошибка: 409") {
           return setIsResponse(RESPONSE_MESSAGES.errorEmail);
         }
@@ -180,6 +166,7 @@ function App() {
       });
   }
 
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
@@ -188,11 +175,11 @@ function App() {
           <main className="main">
             <Routes>
               <Route path="/" index={true} element={<Main />} />
-              <Route
+              {!isLoggedIn && <Route
                 path="/signup"
                 element={<Register onRegister={handleRegister} />}
-              />
-              <Route path="/signin" element={<Login onLogin={handleLogIn} />} />
+              />}
+              {!isLoggedIn && <Route path="/signin" element={<Login onLogin={handleLogIn} />} />}
               <Route
                 path="/movies"
                 element={
@@ -217,7 +204,6 @@ function App() {
                   <ProtectedRoute
                     element={
                       <Profile
-                        currentUser={currentUser}
                         toggleMenu={toggleMenu}
                         onEditProfile={updateUserInfo}
                         onSignOut={handleLogOut}

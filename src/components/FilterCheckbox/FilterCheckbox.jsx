@@ -1,10 +1,16 @@
 import "./FilterCheckbox.css";
 
-const FilterCheckbox = () => {
+const FilterCheckbox = ({isTumblerActive, setIsTumblerActive, handleTumblerClick}) => {
+  function handleClick() {
+    const tumblerState = !isTumblerActive;
+    setIsTumblerActive(tumblerState);
+    handleTumblerClick(tumblerState);
+  }
+
   return (
     <div className="filter">
-      <input type="checkbox" id="toggle" className="filter__checkbox" />
-      <label htmlFor="toggle" className="filter__switch"></label>
+      <input type="checkbox" id="toggle" className={isTumblerActive ? 'filter__checkbox filter__checkbox_active' : 'filter__checkbox'}  onClick={handleClick}/>
+      <label htmlFor="toggle" className='filter__switch'></label>
       <p className="filter__text">Короткометражки</p>
     </div>
   );

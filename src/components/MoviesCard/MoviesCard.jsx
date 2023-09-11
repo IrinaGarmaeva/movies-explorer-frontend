@@ -16,11 +16,13 @@ const MoviesCard = ({ card }) => {
         <h2 className="card__title">{card.nameRU}</h2>
         <p className="card__duration">{`${hours}ч ${minutes}м`}</p>
       </div>
-      <img
-        className="card__image"
-        src={`${baseUrl}/${card.image.url}`}
-        alt={`Постер фильма ${card.nameRU}`}
-      />
+      <a href={card.trailerLink} target="_blank"  rel="noreferrer">
+        <img
+          className="card__image"
+          src={`${baseUrl}/${card.image.url}`}
+          alt={`Постер фильма ${card.nameRU}`}
+        />
+      </a>
       {location.pathname === "/saved-movies" ? (
         <Button
           className={"card__button card__button_type_delete"}

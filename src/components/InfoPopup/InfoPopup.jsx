@@ -21,12 +21,7 @@ const InfoPopup = ({ isOpen, onClose, isSucess, message }) => {
               : { backgroundImage: `url(${imageOnFail})` }
           }
         />
-        <h2 className="popup__text">
-          {message}
-          {/* {isSucess
-            ? "Вы успешно зарегистрировались!"
-            : "Что-то пошло не так! Попробуйте ещё раз."} */}
-        </h2>
+        <h2 className="popup__text">{message}</h2>
       </div>
     </div>
   );

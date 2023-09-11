@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import "./Profile.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
 
-const Profile = ({ currentUser, toggleMenu, onEditProfile, onSignOut, isLoading }) => {
+const Profile = ({  toggleMenu, onEditProfile, onSignOut, isLoading }) => {
   const [editProfile, setEditProfile] = useState(false);
   const { values, setValues, errors, handleChange, isValid, setIsValid, resetForm } = useFormAndValidation();
-  // const [] = useState();
-  const navigate = useNavigate();
+
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     setValues({
@@ -79,7 +79,7 @@ const Profile = ({ currentUser, toggleMenu, onEditProfile, onSignOut, isLoading 
             className={"profile__button profile__button_type_save"}
             type={"submit"}
             text={isLoading ? "Сохраняю..." : "Сохранить"}
-            disabled={isValid ? false : true}
+            disabled={!isValid}
           />
         ) : (
           <>
@@ -87,7 +87,7 @@ const Profile = ({ currentUser, toggleMenu, onEditProfile, onSignOut, isLoading 
               className={"profile__button profile__button_type_edit"}
               type={"button"}
               text={"Редактировать"}
-              disabled={isValid ? false : true}
+              disabled={!isValid }
               onClick={() => setEditProfile(true)}
             />
             <Button

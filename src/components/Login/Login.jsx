@@ -13,7 +13,6 @@ const Login = ({ onLogin }) => {
     const {email, password} = values;
     onLogin(email, password);
     resetForm();
-    console.log("You sucessfully logged in");
   }
 
   return (
