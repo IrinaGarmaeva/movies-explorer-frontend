@@ -1,142 +1,124 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Movies.css";
-import moviesApi from "../../utils/MoviesApi";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
-import { saveToLocalStorage, getFromLocalStorage } from "../../utils/localStorageFunctions";
-import {
-  NOTHING_FOUND,
-  moviesFiltredBySearchRequest,
-  moviesFiltredByDuration,
-} from "../../utils/consts";
+import { getFromLocalStorage } from "../../utils/localStorageFunctions";
+import { searchMoviesInMovies, searchShortMovies } from "../../utils/searchMovies";
 
-const Movies = () => {
-  const [moviesInitial, setMoviesInitial] = useState([]); // фильмы, полученные из запроса к апи(все фильмы с апи)
+const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) => {
   const [moviesSearched, setMoviesSearched] = useState([]); // отфильтрованные фильмы
-  // const [moviesSaved, setMoviesSaved] = useState([]); // сохраненные фильмы
-  const [isSearch, setIsSearch] = useState(false); // preloader
+  const [isSearch, setIsSearch] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(true); // state to show/hide search input error
   const [searchRequest, setSearchRequest] = useState("");
   const [isTumblerActive, setIsTumblerActive] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [moviesToShow, setMoviesToShow] = useState(12);
+  const [moviesToAdd, setMoviesToAdd] = useState(3);
+  const [moviesDisplayed, setMoviesDisplayed] = useState([]);
+  const location = useLocation();
 
-  // здесь будет отрисовываться данные из локал сторэдж
+  // Get and set data from local storage to show on page
   useEffect(() => {
-    const dataStorage = getFromLocalStorage("search");
-    if (dataStorage) {
-      setMoviesSearched(dataStorage.resultFinal);
-      setSearchRequest(dataStorage.searchRequest);
-      setIsTumblerActive(dataStorage.isTumblerActive);
-      setErrorText(dataStorage.errorText);
-    } else {
-      setMoviesSearched([])
-    }
+    const searchInfo = getFromLocalStorage("search");
+    const moviesSavedInfo = getFromLocalStorage("saved-movies")
+    setMoviesSaved(moviesSavedInfo);
+
+    if (searchInfo) {
+      setMoviesSearched(searchInfo.resultFinal);
+      setMoviesDisplayed(searchInfo.resultFinal.slice(0, moviesToShow));
+      setSearchRequest(searchInfo.searchRequest);
+      setIsTumblerActive(searchInfo.isTumblerActive);
+      setErrorText(searchInfo.errorText);
+      } else {
+        setMoviesSearched([])
+      }
   }, []);
 
+  const handleResize = () => {
+    const width = window.innerWidth
+    if(width > 890) {
+      setMoviesToShow(12);
+      setMoviesToAdd(3);
+    } else if(width <= 890 && width > 400) {
+      setMoviesToShow(8);
+      setMoviesToAdd(2);
+    } else if( width <= 400) {
+      setMoviesToShow(5);
+      setMoviesToAdd(1);
+    }
+  }
+
   useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerWidth, moviesToShow, moviesToAdd, searchRequest])
 
-  })
+  useEffect(() => {
+    setMoviesDisplayed(moviesSearched.slice(0, moviesToShow))
+  }, [moviesToShow, moviesSearched])
 
-  const getMoviesCounter = () => {
-    const counter = { initialValue: 12, more: 3 };
+  const isMovieSaved = (movie, moviesSaved) => {
+    return moviesSaved.find(item => item.movieId === movie.id)
+  }
+  // Searched movies and movies with likes
+  const moviesAllAndSaved = moviesSearched.map(movie => ({
+    ...movie,
+    isSaved: isMovieSaved(movie, moviesSaved)
+  }))
 
-    if (windowWidth < 890) {
-      counter.initialValue = 8;
-      counter.addValue = 2;
-    }
-    if (windowWidth < 400) {
-      counter.initialValue = 5;
-      counter.addValue = 1;
-    }
+  const handleSearchMovies = (searchRequest) => {
+    searchMoviesInMovies({searchRequest, setIsValid, setIsSearch, errorText, setErrorText, setMoviesSearched, isTumblerActive, setMoviesSaved})
+  }
 
-    return counter;
-  };
+    // const handleLoadMoreMovies = () => setMoviesDisplayed(moviesSearched.slice(0, moviesDisplayed.length + moviesToAdd))
+  const handleLoadMoreMovies = () => {
+    setMoviesToShow(prevState => prevState + moviesToAdd)
+    // setMoviesDisplayed(moviesAllAndSaved.slice(0, moviesDisplayed.length + moviesToAdd))
+  }
 
-  const counter = getMoviesCounter();
-  const [moviesCounter, setMoviesCounter] = useState(counter.initialValue); // фильмы, которые будут показываться изначально на странице , на 1280 12шт, на 768 8 шт и тд
-
-
-  async function getMovies(searchRequest) {
-    setErrorText("");
+  const handleSearchShortMovies = (isTumblerActive) => {
+    setIsValid(true);
+    const storageSearch = getFromLocalStorage("initial-movies");
 
     if (!searchRequest) {
       setIsValid(false);
       return;
     }
 
-    try {
-      setIsSearch(true);
-      const storageSearch = getFromLocalStorage("initial-movies");  //TODO ПОПРОБОВАТЬ СОХРАНИТЬ НАЙДЕННЫЕ ВСЕ ФИЛЬМЫ С АПИ В СТЕЙТ И ЗАБИРАТЬ ДАННЫЕ ИЗ СТЕЙТА moviesInitital
-
-      if (storageSearch) {
-        const moviesFiltredByRequest = moviesFiltredBySearchRequest(storageSearch, searchRequest.trim());
-        const resultFinal = moviesFiltredByDuration(moviesFiltredByRequest, isTumblerActive);
-        resultFinal.length === 0 ? setErrorText(NOTHING_FOUND) : setErrorText("");
-        saveToLocalStorage("search", {resultFinal, searchRequest, isTumblerActive, errorText});
-        setMoviesSearched(resultFinal);
-      } else {
-        const movies = await moviesApi.getMovies();
-        setMoviesInitial(movies);
-        saveToLocalStorage("initial-movies", movies);
-
-        const moviesFiltredByRequest = moviesFiltredBySearchRequest(movies, searchRequest.trim());
-        const resultFinal = moviesFiltredByDuration(moviesFiltredByRequest, isTumblerActive);
-        resultFinal.length === 0 ? setErrorText(NOTHING_FOUND) : setErrorText("");
-
-        setMoviesSearched(resultFinal);
-      }
-    } catch (error) {
-      console.log(error);
-      setErrorText("Во время запроса произошла ошибка.<br>Возможно, проблема с соединением или сервер недоступен.<br>Подождите немного и попробуйте ещё раз");
-    } finally {
-      setIsSearch(false);
+    if(storageSearch) {
+      searchShortMovies({moviesSavedFromLocalStorage: storageSearch, isTumblerActive, searchRequest, setErrorText, errorText, location: location.pathname, setMovies: setMoviesSearched, setIsValid})
     }
   }
-
-    // loadMore
-    function handleLoadMoreMovies() {
-      console.log("нажали на еще")
-      const { addValue } = getMoviesCounter();
-      setMoviesCounter(moviesCounter + addValue);
-      setMoviesSearched(moviesSearched.slice(0, moviesCounter))
-    }
-
-    function handleTumblerClick(isTumblerActive) {
-      console.log('click on tumbler')
-      const storageSearch = getFromLocalStorage("initial-movies");  //TODO ПОПРОБОВАТЬ СОХРАНИТЬ НАЙДЕННЫЕ ВСЕ ФИЛЬМЫ С АПИ В СТЕЙТ И ЗАБИРАТЬ ДАННЫЕ ИЗ СТЕЙТА moviesInitital
-
-      if (storageSearch) {
-        const moviesFiltredByRequest = moviesFiltredBySearchRequest(storageSearch, searchRequest.trim());
-        const resultFinal = moviesFiltredByDuration(moviesFiltredByRequest, isTumblerActive);
-        resultFinal.length === 0 ? setErrorText(NOTHING_FOUND) : setErrorText("");
-        saveToLocalStorage("search", {resultFinal, searchRequest, isTumblerActive, errorText});
-        setMoviesSearched(resultFinal);
-      }
-    }
-
 
   return (
     <>
       <SearchForm
         searchRequest={searchRequest}
         setSearchRequest={setSearchRequest}
-        onSearch={getMovies}
+        onSearch={handleSearchMovies}
         isValid={isValid}
         isTumblerActive={isTumblerActive}
         setIsTumblerActive={setIsTumblerActive}
-        handleTumblerClick={handleTumblerClick}
+        handleTumblerClick={handleSearchShortMovies}
       />
-      {errorText && <div className="movies__error">{errorText}</div>}
+      {errorText.length !== 0 && <div className="movies__error">{errorText}</div>}
+      {/* {isError && <div className="movies__error">{errorText}</div>} */}
       {isSearch ? (
         <Preloader />
       ) : (
-        moviesSearched.length !== 0 && (
+        (moviesSearched.length !== 0 && errorText.length === 0) && (
           <MoviesCardList
-            movies={moviesSearched.slice(0, moviesCounter)}
-            buttonShow={moviesSearched.length > moviesCounter}
-            onClick={handleLoadMoreMovies}
+            movies={moviesAllAndSaved.slice(0, moviesToShow)}
+            // movies={moviesSearched}
+            // buttonShow={moviesSearched.length > moviesAllAndSaved.length}
+            buttonShow={moviesAllAndSaved.length > moviesDisplayed.length}
+            loadMore={handleLoadMoreMovies}
+            handleLike={handleLike}
+            handleDeleteLike={handleDeleteLike}
           />
         )
       )}

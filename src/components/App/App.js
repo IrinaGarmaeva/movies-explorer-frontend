@@ -15,6 +15,7 @@ import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
 
 import { RESPONSE_MESSAGES } from "../../utils/consts";
+import { saveToLocalStorage, getFromLocalStorage } from "../../utils/localStorageFunctions";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +24,7 @@ function App() {
   const [isResponse, setIsResponse] = useState("");
   const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
+  const [moviesSaved, setMoviesSaved] = useState([]); 
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -166,6 +168,33 @@ function App() {
       });
   }
 
+  const handleLike = (movie) => {
+    mainApi.addMovieToFavorites(movie)
+      .then((data) => {
+        setMoviesSaved([data, ...moviesSaved])
+        saveToLocalStorage('saved-movies', [data, ...moviesSaved])
+      })
+      .catch(err => console.log(err))
+  }
+
+  const handleDeleteLike = (movie) => {
+    let id = movie._id
+
+    if(!id && moviesSaved.length > 0) {
+      const movieFound = moviesSaved.find(card => card.movieId === movie.movieId)
+      movieFound && (id = movieFound._id)
+    }
+
+    if(id) {
+      const moviesSavedFromLocalStorage = getFromLocalStorage('saved-movies') || [];
+      mainApi.deleteMovieFromFavotites(movie._id)
+        .then(() => {
+          setMoviesSaved(moviesSaved.filter((card) => card._id !== id));
+          saveToLocalStorage('saved-movies', moviesSavedFromLocalStorage.filter((card) => card._id !== id) )
+        })
+        .catch(err => console.log(err))
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -184,7 +213,7 @@ function App() {
                 path="/movies"
                 element={
                   <ProtectedRoute
-                    element={<Movies />}
+                    element={<Movies handleLike={handleLike} handleDeleteLike={handleDeleteLike} moviesSaved={moviesSaved} setMoviesSaved={setMoviesSaved} />}
                     isLoggedIn={isLoggedIn}
                   />
                 }
@@ -193,7 +222,7 @@ function App() {
                 path="/saved-movies"
                 element={
                   <ProtectedRoute
-                    element={<SavedMovies />}
+                    element={<SavedMovies moviesSaved={moviesSaved} setMoviesSaved={setMoviesSaved} handleDeleteLike={handleDeleteLike}/>}
                     isLoggedIn={isLoggedIn}
                   />
                 }

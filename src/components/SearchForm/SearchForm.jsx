@@ -1,26 +1,16 @@
-import { useEffect } from "react";
 import "./SearchForm.css";
 import Button from "../Button/Button";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-// import useFormAndValidation from "../../hooks/useFormAndValidation";
-
 
 const SearchForm = ({ searchRequest, setSearchRequest, onSearch, isValid, isTumblerActive, setIsTumblerActive, handleTumblerClick}) => {
-  // const { values, handleChange } = useFormAndValidation();
-
-function handleChange(evt) {
-  setSearchRequest(evt.target.value)
-}
+  function handleChange(evt) {
+    setSearchRequest(evt.target.value);
+  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // onSearch(values.search);
     onSearch(searchRequest);
   }
-
-  // useEffect(() => {
-
-  // })
 
   return (
     <section className="search">
@@ -30,7 +20,6 @@ function handleChange(evt) {
           className="search__input"
           placeholder="Фильм"
           name="search"
-          // value={values.search  || ''}
           value={searchRequest}
           onChange={handleChange}
           required

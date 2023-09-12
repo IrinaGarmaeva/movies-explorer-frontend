@@ -1,3 +1,4 @@
+import { SERVER_URL } from "./consts";
 class MainApi {
   constructor({baseUrl, headers}){
     this._baseUrl = baseUrl;
@@ -71,6 +72,46 @@ class MainApi {
   // Get token to check authentication
   async getToken() {
     const response = await fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    return this._checkResponse(response)
+  }
+
+  async addMovieToFavorites(movie) {
+    const response = await fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `${SERVER_URL}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        thumbnail: `${SERVER_URL}${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+      })
+    })
+    return this._checkResponse(response)
+  }
+
+  async getFavouriteMovies() {
+    const response = await fetch(`${this._baseUrl}/movies`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    return this._checkResponse(response)
+  }
+
+  async deleteMovieFromFavotites(movieId) {
+    console.log(movieId)
+    const response = await fetch(`${this._baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
     })

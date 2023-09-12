@@ -1,5 +1,13 @@
-const SHORT_MOVIES_DURATION = 40;
+export const SHORT_MOVIES_DURATION = 40;
 export const NOTHING_FOUND = "Ничего не найдено";
+export const SERVER_URL = "https://api.nomoreparties.co"
+
+// get duration
+export const duration = (card) => {
+  const hours = Math.floor(card.duration / 60);
+  const minutes = card.duration - hours * 60;
+  return `${hours}ч ${minutes}м`
+}
 
 // Patterns
 export const PATTERN_USERNAME = "^[A-Za-zА-Яа-я\- ]{2,30}$"
@@ -25,20 +33,3 @@ export const RESPONSE_MESSAGES = {
   errorLogin: "Неправильные почта или пароль",
 }
 
-export const moviesFiltredBySearchRequest = (movies, searchRequest) => {
-  const request = searchRequest.toLowerCase();
-  return movies.filter((movie) => {
-    const nameRu = movie.nameRU.toLowerCase();
-    const nameEn = movie.nameEN.toLowerCase();
-    return nameRu.includes(request) || nameEn.includes(request);
-  })
-};
-
-export const moviesFiltredByDuration = (movies, isTumblerActive) => {
-  console.log(isTumblerActive)
-  if(isTumblerActive) {
-    return movies.filter((movie) => movie.duration <= SHORT_MOVIES_DURATION)
-  } else {
-    return movies
-  }
-}

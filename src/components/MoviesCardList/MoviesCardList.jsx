@@ -3,47 +3,33 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Button from "../Button/Button";
 import "./MoviesCardList.css";
 
-const MoviesCardList = ({ movies, buttonShow, onClick }) => {
+const MoviesCardList = ({
+  movies,
+  moviesSaved,
+  buttonShow,
+  loadMore,
+  handleLike,
+  handleDeleteLike
+}) => {
   const location = useLocation();
-  const windowWidth = window.innerWidth;
   const savedMoviesRoute = location.pathname === "/saved-movies";
-
 
   return (
     <section className="cards" aria-label="Секция с карточками фильмов">
       <ul className="cards__container">
-        {movies.map((item) => {
-          return <MoviesCard key={item.id} card={item} />;
-        })}
-        {/* {location.pathname === "/movies" && (
-          <>
-            {condition1280 && (
-              <>
-                {movies.map((item) => {
-                  return <MoviesCard key={item.id} card={item} />;
-                })}
-              </>
-            )}
-            {condition768 && (
-              <>
-                {movies768.map((item) => {
-                  return <MoviesCard key={item.id} card={item} />;
-                })}
-              </>
-            )}
-            {condition320 && (
-              <>
-                {movies320.map((item) => {
-                  return <MoviesCard key={item.id} card={item} />;
-                })}
-              </>
-            )}
-          </>
-        )} */}
-        {location.pathname === "/saved-movies" && (
+        {location.pathname === "/movies" && (
           <>
             {movies.map((item) => {
-              return <MoviesCard key={item.id} card={item} />;
+              return (
+                <MoviesCard key={item.id} card={item} handleLike={handleLike} />
+              );
+            })}
+          </>
+        )}
+        {(location.pathname === "/saved-movies") && (
+          <>
+            {moviesSaved.map((item) => {
+              return <MoviesCard key={item._id} card={item} handleDeleteLike={handleDeleteLike} />;
             })}
           </>
         )}
@@ -53,7 +39,7 @@ const MoviesCardList = ({ movies, buttonShow, onClick }) => {
           className={"cards__button"}
           type={"button"}
           text={"Ещё"}
-          onClick={onClick}
+          onClick={loadMore}
         />
       )}
       {savedMoviesRoute && <div className="cards__button-container"></div>}

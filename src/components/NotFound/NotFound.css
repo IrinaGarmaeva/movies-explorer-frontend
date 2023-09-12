@@ -29,6 +29,10 @@
 }
 
 .notfound__button {
+  padding: 0;
+  border: none;
+  background-color: inherit;
+
   margin-top: 184px;
   color: var(--color-blue);
   text-align: center;
