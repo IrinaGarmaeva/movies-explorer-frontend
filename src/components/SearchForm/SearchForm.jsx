@@ -2,12 +2,13 @@ import "./SearchForm.css";
 import Button from "../Button/Button";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-const SearchForm = ({ searchRequest, setSearchRequest, onSearch, isValid, isTumblerActive, setIsTumblerActive, handleTumblerClick}) => {
-  function handleChange(evt) {
+const SearchForm = ({ searchRequest, setSearchRequest, onSearch, isValid, isTumblerActive, setIsTumblerActive, handleTumblerClick, isSearch}) => {
+
+  const handleChange = (evt) => {
     setSearchRequest(evt.target.value);
   }
 
-  function handleSubmit(evt) {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     onSearch(searchRequest);
   }
@@ -22,6 +23,7 @@ const SearchForm = ({ searchRequest, setSearchRequest, onSearch, isValid, isTumb
           name="search"
           value={searchRequest}
           onChange={handleChange}
+          disabled={isSearch ? 'disabled' : ''}
           required
         />
         <span className="search__input-error">{!isValid ? 'Нужно ввести ключевое слово' : ''}</span>

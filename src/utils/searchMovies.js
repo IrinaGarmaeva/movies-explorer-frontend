@@ -24,7 +24,6 @@ export const searchMoviesInMovies = async ({
   searchRequest,
   setIsValid,
   setIsSearch,
-  errorText,
   setErrorText,
   setMoviesSearched,
   isTumblerActive,
@@ -38,8 +37,8 @@ export const searchMoviesInMovies = async ({
     return;
   }
 
+  setIsSearch(true);
   try {
-    setIsSearch(true);
     const storageSearch = getFromLocalStorage("initial-movies");
 
     if (storageSearch) {

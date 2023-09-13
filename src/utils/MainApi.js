@@ -1,4 +1,4 @@
-import { SERVER_URL } from "./consts";
+import { SERVER_URL, BASE_URL } from "./consts";
 class MainApi {
   constructor({baseUrl, headers}){
     this._baseUrl = baseUrl;
@@ -62,7 +62,6 @@ class MainApi {
   // User log out
   async logout(){
     const response = await fetch(`${this._baseUrl}/signout`, {
-      // method: 'GET',
       headers: this._headers,
       credentials: 'include',
     });
@@ -120,8 +119,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3000',
-  // baseUrl: '',
+  // baseUrl: 'http://localhost:3000',
+  baseUrl: BASE_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

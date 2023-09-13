@@ -108,6 +108,10 @@
     width: 260px;
   }
 
+  .entry__input-error {
+    font-size: 8px;
+  }
+
   .entry__button {
     margin-top: 156px;
     padding: 14px 67px 13px 68px;

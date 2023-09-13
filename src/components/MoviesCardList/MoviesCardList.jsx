@@ -26,7 +26,7 @@ const MoviesCardList = ({
             })}
           </>
         )}
-        {(location.pathname === "/saved-movies") && (
+        {savedMoviesRoute && (
           <>
             {moviesSaved.map((item) => {
               return <MoviesCard key={item._id} card={item} handleDeleteLike={handleDeleteLike} />;

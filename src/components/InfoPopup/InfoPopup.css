@@ -60,3 +60,22 @@
   text-align: center;
   align-self: center;
 }
+
+@media (max-width: 530px) {
+  .popup__container {
+    width: 290px;
+    padding: 40px 0;
+  }
+
+  .popup__close-btn {
+    top: -36px;
+    right: 0;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .popup__text{
+    font-size: 20px;
+  }
+}

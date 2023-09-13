@@ -1,10 +1,8 @@
-import { useState } from "react";
 import "./Entry.css";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 
 const Entry = ({ title, children, onSubmit, buttonText, isValid }) => {
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="entry__container">
@@ -17,7 +15,7 @@ const Entry = ({ title, children, onSubmit, buttonText, isValid }) => {
         <Button
           className={"entry__button"}
           type={"submit"}
-          text={isLoading ? "Подождите ... " : buttonText}
+          text={buttonText}
           disabled={isValid ? false : true}
         />
       </form>

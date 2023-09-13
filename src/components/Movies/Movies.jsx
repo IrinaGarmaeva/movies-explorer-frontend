@@ -8,7 +8,7 @@ import { getFromLocalStorage } from "../../utils/localStorageFunctions";
 import { searchMoviesInMovies, searchShortMovies } from "../../utils/searchMovies";
 
 const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) => {
-  const [moviesSearched, setMoviesSearched] = useState([]); // отфильтрованные фильмы
+  const [moviesSearched, setMoviesSearched] = useState([]); // movies filtred by keywords
   const [isSearch, setIsSearch] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [isValid, setIsValid] = useState(true); // state to show/hide search input error
@@ -71,13 +71,11 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
   }))
 
   const handleSearchMovies = (searchRequest) => {
-    searchMoviesInMovies({searchRequest, setIsValid, setIsSearch, errorText, setErrorText, setMoviesSearched, isTumblerActive, setMoviesSaved})
+    searchMoviesInMovies({searchRequest, setIsValid, setIsSearch, setErrorText, setMoviesSearched, isTumblerActive, setMoviesSaved})
   }
 
-    // const handleLoadMoreMovies = () => setMoviesDisplayed(moviesSearched.slice(0, moviesDisplayed.length + moviesToAdd))
   const handleLoadMoreMovies = () => {
     setMoviesToShow(prevState => prevState + moviesToAdd)
-    // setMoviesDisplayed(moviesAllAndSaved.slice(0, moviesDisplayed.length + moviesToAdd))
   }
 
   const handleSearchShortMovies = (isTumblerActive) => {
@@ -104,17 +102,15 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
         isTumblerActive={isTumblerActive}
         setIsTumblerActive={setIsTumblerActive}
         handleTumblerClick={handleSearchShortMovies}
+        isSearch={isSearch}
       />
       {errorText.length !== 0 && <div className="movies__error">{errorText}</div>}
-      {/* {isError && <div className="movies__error">{errorText}</div>} */}
       {isSearch ? (
         <Preloader />
       ) : (
         (moviesSearched.length !== 0 && errorText.length === 0) && (
           <MoviesCardList
             movies={moviesAllAndSaved.slice(0, moviesToShow)}
-            // movies={moviesSearched}
-            // buttonShow={moviesSearched.length > moviesAllAndSaved.length}
             buttonShow={moviesAllAndSaved.length > moviesDisplayed.length}
             loadMore={handleLoadMoreMovies}
             handleLike={handleLike}

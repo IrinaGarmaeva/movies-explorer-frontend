@@ -25,6 +25,7 @@ const useFormAndValidation = () => {
     values,
     handleChange,
     errors,
+    setErrors,
     isValid,
     resetForm,
     setValues,

@@ -28,7 +28,7 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
                   }
                   onClick={handleCloseMobileMenu}
                 >
-                  <Link to="/">Главная</Link>
+                  <Link to="/" onClick={handleCloseMobileMenu}>Главная</Link>
                 </li>
               )}
               <li
@@ -39,7 +39,7 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
                 }
                 onClick={handleCloseMobileMenu}
               >
-                <Link to="/movies">Фильмы</Link>
+                <Link to="/movies" onClick={handleCloseMobileMenu}>Фильмы</Link>
               </li>
               <li
                 className={
@@ -49,10 +49,10 @@ const Navigation = ({ isLoggedIn, toggleMenu, handleCloseMobileMenu }) => {
                 }
                 onClick={handleCloseMobileMenu}
               >
-                <Link to="/saved-movies">Сохранённые фильмы</Link>
+                <Link to="/saved-movies" onClick={handleCloseMobileMenu}>Сохранённые фильмы</Link>
               </li>
             </ul>
-            <Link to="/profile">
+            <Link to="/profile" onClick={handleCloseMobileMenu}>
               <div className="nav__account-container button">
                 <p
                   className={

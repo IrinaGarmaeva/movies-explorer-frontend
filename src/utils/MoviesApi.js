@@ -1,3 +1,4 @@
+import { BEATFILM_MOVIES_URL } from "./consts";
 class MoviesApi {
   constructor({baseUrl, headers}){
     this._baseUrl = baseUrl;
@@ -11,7 +12,7 @@ class MoviesApi {
       return res.json();
   }
 
-  //Search movie
+  // Get all movies
   async getMovies() {
     const response = await fetch(`${this._baseUrl}`, {
       headers: this._headers,
@@ -21,7 +22,7 @@ class MoviesApi {
 }
 
 const moviesApi = new MoviesApi({
-  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+  baseUrl: BEATFILM_MOVIES_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

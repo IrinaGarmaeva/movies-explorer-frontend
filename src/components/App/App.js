@@ -24,7 +24,7 @@ function App() {
   const [isResponse, setIsResponse] = useState("");
   const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-  const [moviesSaved, setMoviesSaved] = useState([]); 
+  const [moviesSaved, setMoviesSaved] = useState([]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -53,13 +53,11 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  function toggleMenu() {
-    setIsLoggedIn((prevState) => !prevState);
-  }
+  const toggleMenu = () => setIsLoggedIn((prevState) => !prevState);
 
   const closePopup = () => setIsInfoPopupOpen(false);
 
-  function checkToken() {
+  const checkToken = () => {
     mainApi
       .getToken()
       .then((res) => {
@@ -81,7 +79,7 @@ function App() {
     checkToken();
   }, []);
 
-  function handleRegister(name, email, password, resetForm) {
+  const handleRegister = (name, email, password, resetForm) => {
     setIsLoading(true);
     mainApi
       .registerUser(name, email, password)
@@ -106,7 +104,7 @@ function App() {
       });
   }
 
-  function handleLogIn(email, password) {
+  const handleLogIn = (email, password) => {
     if (!email || !password) {
       return;
     }
@@ -129,7 +127,7 @@ function App() {
     })
   }
 
-  function handleLogOut() {
+  const handleLogOut = () => {
     mainApi
       .logout()
       .then(() => {
@@ -141,7 +139,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function updateUserInfo(name, email, resetForm) {
+  const updateUserInfo = (name, email, resetForm) => {
     setIsLoading(true);
     mainApi
       .editUserdata(name, email)
