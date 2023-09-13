@@ -6,6 +6,8 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import { getFromLocalStorage } from "../../utils/localStorageFunctions";
 import { searchMoviesInMovies, searchShortMovies } from "../../utils/searchMovies";
+import { WIDTH_1275, WIDTH_767, CARDS_12, CARDS_8, CARDS_5, CARDS_3, CARDS_2, CARDS_1 } from "../../utils/consts";
+
 
 const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) => {
   const [moviesSearched, setMoviesSearched] = useState([]); // movies filtred by keywords
@@ -14,8 +16,8 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
   const [isValid, setIsValid] = useState(true); // state to show/hide search input error
   const [searchRequest, setSearchRequest] = useState("");
   const [isTumblerActive, setIsTumblerActive] = useState(false);
-  const [moviesToShow, setMoviesToShow] = useState(12);
-  const [moviesToAdd, setMoviesToAdd] = useState(3);
+  const [moviesToShow, setMoviesToShow] = useState(CARDS_12);
+  const [moviesToAdd, setMoviesToAdd] = useState(CARDS_3);
   const [moviesDisplayed, setMoviesDisplayed] = useState([]);
   const location = useLocation();
 
@@ -38,15 +40,15 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
 
   const handleResize = () => {
     const width = window.innerWidth
-    if(width > 890) {
-      setMoviesToShow(12);
-      setMoviesToAdd(3);
-    } else if(width <= 890 && width > 400) {
-      setMoviesToShow(8);
-      setMoviesToAdd(2);
-    } else if( width <= 400) {
-      setMoviesToShow(5);
-      setMoviesToAdd(1);
+    if(width > WIDTH_1275) {
+      setMoviesToShow(CARDS_12);
+      setMoviesToAdd(CARDS_3);
+    } else if(width <= WIDTH_1275 && width > WIDTH_767) {
+      setMoviesToShow(CARDS_8);
+      setMoviesToAdd(CARDS_2);
+    } else if( width <= WIDTH_767) {
+      setMoviesToShow(CARDS_5);
+      setMoviesToAdd(CARDS_1);
     }
   }
 

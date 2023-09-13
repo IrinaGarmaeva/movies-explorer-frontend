@@ -179,13 +179,13 @@ function App() {
     let id = movie._id
 
     if(!id && moviesSaved.length > 0) {
-      const movieFound = moviesSaved.find(card => card.movieId === movie.movieId)
+      const movieFound = moviesSaved.find(card => card.movieId === movie.id)
       movieFound && (id = movieFound._id)
     }
 
     if(id) {
       const moviesSavedFromLocalStorage = getFromLocalStorage('saved-movies') || [];
-      mainApi.deleteMovieFromFavotites(movie._id)
+      mainApi.deleteMovieFromFavotites(id)
         .then(() => {
           setMoviesSaved(moviesSaved.filter((card) => card._id !== id));
           saveToLocalStorage('saved-movies', moviesSavedFromLocalStorage.filter((card) => card._id !== id) )

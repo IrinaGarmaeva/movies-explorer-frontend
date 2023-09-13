@@ -14,7 +14,7 @@ const NotFound = () => {
       <div className="notfound__block">
         <h1 className="notfound__title">404</h1>
         <p className="notfound__subtitle">Страница не найдена</p>
-        <Button className={"notfound__button"} type={"button"} onClick={goBack} text={"Назад"}/>
+        <Button className={"notfound__button"} type={"button"} onClick={goBack} text={"Назад"} />
       </div>
     </section>
   )

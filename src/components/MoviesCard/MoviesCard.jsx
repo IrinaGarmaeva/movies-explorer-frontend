@@ -14,7 +14,7 @@ const MoviesCard = ({ card, handleLike, handleDeleteLike }) => {
   }
 
   const handleDeleteClick = () => {
-    if(location.pathname === 'movies') {
+    if(location.pathname === '/movies') {
       setSavedCard(!isSavedMovie);
       handleDeleteLike(card);
     } else {

@@ -26,8 +26,9 @@ const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
     setErrors('');
   }, [currentUser]);
 
+  //errors.name || errors.email ||
   useEffect(() => {
-    if (errors.name || errors.email || currentUser.name === values.name || currentUser.email === values.emai) {
+    if (currentUser.name === values.name || currentUser.email === values.email ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);

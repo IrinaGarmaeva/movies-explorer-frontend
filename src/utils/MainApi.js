@@ -108,7 +108,6 @@ class MainApi {
   }
 
   async deleteMovieFromFavotites(movieId) {
-    console.log(movieId)
     const response = await fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._headers,
@@ -119,8 +118,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  // baseUrl: 'http://localhost:3000',
-  baseUrl: BASE_URL,
+  baseUrl: 'http://localhost:3000',
+  // baseUrl: BASE_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

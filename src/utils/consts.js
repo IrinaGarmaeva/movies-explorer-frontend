@@ -1,8 +1,16 @@
-export const SHORT_MOVIES_DURATION = 40;
-export const NOTHING_FOUND = "Ничего не найдено";
 export const SERVER_URL = "https://api.nomoreparties.co";
 export const BASE_URL = "https://api.movies.irina.nomoredomainsicu.ru";
 export const BEATFILM_MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
+export const SHORT_MOVIES_DURATION = 40;
+export const NOTHING_FOUND = "Ничего не найдено";
+export const WIDTH_1275 = 1275;
+export const WIDTH_767 = 767;
+export const CARDS_12 = 12;
+export const CARDS_8 = 8;
+export const CARDS_5 = 5;
+export const CARDS_3 = 3;
+export const CARDS_2 = 2;
+export const CARDS_1 = 1;
 
 // get duration
 export const duration = (card) => {
