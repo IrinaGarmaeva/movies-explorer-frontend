@@ -3,7 +3,6 @@ import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 
 const Entry = ({ title, children, onSubmit, buttonText, isValid }) => {
-
   return (
     <div className="entry__container">
       <Logo />
@@ -16,7 +15,7 @@ const Entry = ({ title, children, onSubmit, buttonText, isValid }) => {
           className={"entry__button"}
           type={"submit"}
           text={buttonText}
-          disabled={isValid ? false : true}
+          disabled={!isValid}
         />
       </form>
     </div>

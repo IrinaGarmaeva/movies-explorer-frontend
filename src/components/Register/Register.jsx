@@ -1,27 +1,52 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "./Register.css";
+import { Link, useNavigate } from "react-router-dom";
+import mainApi from "../../utils/MainApi";
 import Entry from "../Entry/Entry";
 import Input from "../Input/Input";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
-import { PATTERN_USERNAME, PATTERN_EMAIL, PATTERN_PASSWORD, VALIDATION_MESSAGES } from '../../utils/consts';
+import { PATTERN_USERNAME, PATTERN_EMAIL, PATTERN_PASSWORD, VALIDATION_MESSAGES, RESPONSE_MESSAGES } from '../../utils/consts';
+import "./Register.css";
 
-const Register = ({ onRegister }) => {
-  const [isFormValid, setIsFormValid] = useState(false)
+const Register = ({ setIsSuccessRequest, setIsLoggedIn, setIsResponse, setIsInfoPopupOpen }) => {
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const { values, errors, setErrors, handleChange, resetForm } = useFormAndValidation();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if(errors.name || errors.email || errors.password) {
+    if(errors.name || errors.email || errors.password || !values.name || !values.email || !values.password) {
       setIsFormValid(false)
     } else {
       setIsFormValid(true)
     }
   }, [errors])
 
-  const handleSubmit = (evt) => {
+  const handleRegister = (evt) => {
     evt.preventDefault();
     const { name, email, password } = values;
-    onRegister(name, email, password, resetForm);
+    setIsLoading(true);
+    mainApi
+      .registerUser(name, email, password)
+      .then(() => {
+        setIsSuccessRequest(true);
+        setIsLoggedIn(true);
+        setIsResponse(RESPONSE_MESSAGES.successOnRegistration);
+        navigate("/movies", { replace: true });
+        resetForm();
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccessRequest(false);
+        if (err === "Ошибка: 409") {
+          return setIsResponse(RESPONSE_MESSAGES.errorEmail);
+        }
+        return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsInfoPopupOpen(true);
+      });
   }
 
   const handleChangeEmail = (evt) => {
@@ -58,8 +83,8 @@ const Register = ({ onRegister }) => {
     <section className="register">
       <Entry
         title={"Добро пожаловать!"}
-        onSubmit={handleSubmit}
-        buttonText={"Зарегистрироваться"}
+        onSubmit={handleRegister}
+        buttonText={isLoading ? 'Подождите...' : "Зарегистрироваться"}
         isValid={isFormValid}
       >
         <>
@@ -74,6 +99,7 @@ const Register = ({ onRegister }) => {
             onChange={handleChangeName}
             errorClassName={'entry__input-error'}
             errorMessage={errors.name}
+            isDisabled={isLoading}
           />
           <Input
             labelClassName={"entry__label"}
@@ -86,6 +112,7 @@ const Register = ({ onRegister }) => {
             onChange={handleChangeEmail}
             errorClassName={'entry__input-error'}
             errorMessage={errors.email}
+            isDisabled={isLoading}
           />
           <Input
             labelClassName={"entry__label"}
@@ -98,6 +125,7 @@ const Register = ({ onRegister }) => {
             onChange={handleChangePassword}
             errorClassName={'entry__input-error'}
             errorMessage={errors.password}
+            isDisabled={isLoading}
           />
         </>
       </Entry>

@@ -1,18 +1,18 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import mainApi from "../../utils/MainApi";
 import Button from "../Button/Button";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
 import {
   PATTERN_USERNAME,
   PATTERN_EMAIL,
   VALIDATION_MESSAGES,
+  RESPONSE_MESSAGES
 } from "../../utils/consts";
 import "./Profile.css";
 
-import mainApi from "../../utils/MainApi";
-import { RESPONSE_MESSAGES } from "../../utils/consts";
-
-const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, setIsResponse, setIsInfoPopupOpen }) => {
+const Profile = ({ setCurrentUser, setIsSuccessRequest, setIsResponse, setIsInfoPopupOpen, setIsLoggedIn }) => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [error, setError] = useState('');
@@ -21,6 +21,7 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
     useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
+  const navigate = useNavigate();
   const initialValuesChanged = currentUser.name !== values.name || currentUser.email !== values.email
 
   useEffect(() => {
@@ -63,6 +64,21 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const handleLogOut = () => {
+    mainApi
+      .logout()
+      .then(() => {
+        setIsLoggedIn(false);
+        setCurrentUser({});
+        localStorage.clear();
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert(RESPONSE_MESSAGES.errorGeneral)
+      })
   }
 
   const handleChangeName = (evt) => {
@@ -94,11 +110,6 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
     }
   }, [errors, currentUser]);
 
-  const logOut = () => {
-    toggleMenu();
-    onSignOut();
-  };
-
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, {currentUser.name}!</h1>
@@ -117,7 +128,7 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
               minLength={2}
               maxLength={30}
               placeholder="Введите своё имя"
-              disabled={isEditProfile ? "" : "disabled"}
+              disabled={isLoading}
             />
           </div>
           <span className="profile__input-span">{errors.name}</span>
@@ -134,7 +145,7 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
               name="email"
               className="profile__input"
               placeholder="Введите свой e-mail"
-              disabled={isEditProfile ? "" : "disabled"}
+              disabled={isLoading}
             />
           </div>
           <span className="profile__input-span">{errors.email}</span>
@@ -161,7 +172,7 @@ const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, s
               className={"profile__button profile__button_type_logout"}
               type={"button"}
               text={"Выйти из аккаунта"}
-              onClick={logOut}
+              onClick={handleLogOut}
             />
           </>
         )}

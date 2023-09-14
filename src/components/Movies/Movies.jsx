@@ -91,6 +91,7 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
     }
 
     if(storageSearch) {
+      setErrorText('')
       searchShortMovies({moviesSavedFromLocalStorage: storageSearch, isTumblerActive, searchRequest, setErrorText, errorText, location: location.pathname, setMovies: setMoviesSearched, setIsValid})
     }
   }

@@ -1,28 +1,48 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import mainApi from "../../utils/MainApi";
 import Entry from "../Entry/Entry";
 import Input from "../Input/Input";
-import "./Login.css";
 import useFormAndValidation from "../../hooks/useFormAndValidation";
-import { PATTERN_EMAIL, PATTERN_PASSWORD, VALIDATION_MESSAGES } from '../../utils/consts';
+import { PATTERN_EMAIL, PATTERN_PASSWORD, VALIDATION_MESSAGES, RESPONSE_MESSAGES } from '../../utils/consts';
+import "./Login.css";
 
-const Login = ({ onLogin }) => {
+const Login = ({ setIsLoggedIn, setIsInfoPopupOpen, setIsSuccessRequest, setIsResponse }) => {
   const { values, errors, setErrors, handleChange, resetForm } = useFormAndValidation();
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(errors.email || errors.password) {
+    if(errors.email || errors.password || !values.email || !values.password) {
       setIsFormValid(false)
     } else {
       setIsFormValid(true)
     }
   }, [errors])
 
-  function handleSubmit(evt) {
+  const handleLogin = (evt) => {
     evt.preventDefault();
     const {email, password} = values;
-    onLogin(email, password);
-    resetForm();
+    setIsLoading(true);
+    mainApi.loginUser(email, password)
+    .then(() => {
+      setIsLoggedIn(true);
+      navigate("/movies", { replace: true });
+      resetForm();
+    })
+    .catch((err) => {
+      setIsInfoPopupOpen(true);
+      setIsSuccessRequest(false);
+      if(err === "Ошибка: 401") {
+        return setIsResponse(RESPONSE_MESSAGES.errorLogin);
+      }
+      return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
   }
 
   const handleChangeEmail = (evt) => {
@@ -49,8 +69,8 @@ const Login = ({ onLogin }) => {
     <section className="login">
       <Entry
         title={"Рады видеть!"}
-        onSubmit={handleSubmit}
-        buttonText={"Войти"}
+        onSubmit={handleLogin}
+        buttonText={isLoading ? 'Подождите...' : "Войти"}
         isValid={isFormValid}
       >
         <Input
@@ -64,6 +84,7 @@ const Login = ({ onLogin }) => {
             onChange={handleChangeEmail}
             errorClassName={'entry__input-error'}
             errorMessage={errors.email}
+            isDisabled={isLoading}
           />
           <Input
             labelClassName={"entry__label"}
@@ -76,6 +97,7 @@ const Login = ({ onLogin }) => {
             onChange={handleChangePassword}
             errorClassName={'entry__input-error'}
             errorMessage={errors.password}
+            isDisabled={isLoading}
           />
       </Entry>
       <div className="login__register">

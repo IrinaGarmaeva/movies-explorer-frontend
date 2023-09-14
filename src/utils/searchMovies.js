@@ -133,15 +133,8 @@ export const searchShortMovies = ({
 }) => {
   setIsValid(true)
 
-
-  const moviesFiltredByRequest = moviesFiltredBySearchRequest(
-    moviesSavedFromLocalStorage,
-    searchRequest.trim()
-  );
-  const resultFinal = moviesFiltredByDuration(
-    moviesFiltredByRequest,
-    isTumblerActive
-  );
+  const moviesFiltredByRequest = moviesFiltredBySearchRequest(moviesSavedFromLocalStorage, searchRequest.trim());
+  const resultFinal = moviesFiltredByDuration(moviesFiltredByRequest, isTumblerActive);
   resultFinal.length === 0 ? setErrorText(NOTHING_FOUND) : setErrorText("");
 
   location === "/movies" &&
@@ -149,7 +142,7 @@ export const searchShortMovies = ({
       resultFinal,
       searchRequest,
       isTumblerActive,
-      errorText,
+      errorText: resultFinal.length === 0 ? NOTHING_FOUND : '',
     });
 
   setMovies(resultFinal);

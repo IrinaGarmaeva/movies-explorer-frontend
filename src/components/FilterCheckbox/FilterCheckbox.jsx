@@ -1,7 +1,7 @@
 import "./FilterCheckbox.css";
 
 const FilterCheckbox = ({isTumblerActive, setIsTumblerActive, handleTumblerClick}) => {
-  function handleClick() {
+  const handleClick = () => {
     const tumblerState = !isTumblerActive;
     setIsTumblerActive(tumblerState);
     handleTumblerClick(tumblerState);

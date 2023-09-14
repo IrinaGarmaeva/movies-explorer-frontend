@@ -13,14 +13,11 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
-
-import { RESPONSE_MESSAGES } from "../../utils/consts";
 import { saveToLocalStorage, getFromLocalStorage } from "../../utils/localStorageFunctions";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [isResponse, setIsResponse] = useState("");
   const [isSuccessRequest, setIsSuccessRequest] = useState(null);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
@@ -53,8 +50,6 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  const toggleMenu = () => setIsLoggedIn((prevState) => !prevState);
-
   const closePopup = () => setIsInfoPopupOpen(false);
 
   const checkToken = () => {
@@ -78,94 +73,6 @@ function App() {
   useEffect(() => {
     checkToken();
   }, []);
-
-  const handleRegister = (name, email, password, resetForm) => {
-    setIsLoading(true);
-    mainApi
-      .registerUser(name, email, password)
-      .then((res) => {
-        setIsSuccessRequest(true);
-        setIsLoggedIn(true);
-        setIsResponse(RESPONSE_MESSAGES.successOnRegistration);
-        navigate("/movies", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsSuccessRequest(false);
-        if (err === "Ошибка: 409") {
-          return setIsResponse(RESPONSE_MESSAGES.errorEmail);
-        }
-        return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsInfoPopupOpen(true);
-        resetForm();
-      });
-  }
-
-  const handleLogIn = (email, password) => {
-    if (!email || !password) {
-      return;
-    }
-    setIsLoading(true);
-    mainApi.loginUser(email, password)
-    .then((res) => {
-      setIsLoggedIn(true);
-      navigate("/movies", { replace: true });
-    })
-    .catch((err) => {
-      setIsInfoPopupOpen(true);
-      setIsSuccessRequest(false);
-      if(err === "Ошибка: 401") {
-        return setIsResponse(RESPONSE_MESSAGES.errorLogin);
-      }
-      return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
-  }
-
-  const handleLogOut = () => {
-    mainApi
-      .logout()
-      .then(() => {
-        setIsLoggedIn(false);
-        setCurrentUser({});
-        localStorage.clear();
-        navigate("/", { replace: true });
-      })
-      .catch((err) => console.log(err));
-  }
-
-  const updateUserInfo = (name, email, resetForm) => {
-    setIsLoading(true);
-    mainApi
-      .editUserdata(name, email)
-      .then((userData) => {
-        setCurrentUser({
-          ...userData,
-          name: userData.name,
-          email: userData.email,
-        });
-        setIsSuccessRequest(true);
-        setIsResponse(RESPONSE_MESSAGES.successOnUpdateProfile);
-        resetForm();
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsSuccessRequest(false);
-        if (err === "Ошибка: 409") {
-          return setIsResponse(RESPONSE_MESSAGES.errorEmail);
-        }
-        return setIsResponse(RESPONSE_MESSAGES.errorGeneral);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsInfoPopupOpen(true);
-      });
-  }
 
   const handleLike = (movie) => {
     mainApi.addMovieToFavorites(movie)
@@ -205,9 +112,9 @@ function App() {
               <Route path="/" index={true} element={<Main />} />
               {!isLoggedIn && <Route
                 path="/signup"
-                element={<Register onRegister={handleRegister} />}
+                element={<Register setIsLoggedIn={setIsLoggedIn} setIsInfoPopupOpen={setIsInfoPopupOpen} setIsSuccessRequest={setIsSuccessRequest} setIsResponse={setIsResponse} />}
               />}
-              {!isLoggedIn && <Route path="/signin" element={<Login onLogin={handleLogIn} />} />}
+              {!isLoggedIn && <Route path="/signin" element={<Login setIsLoggedIn={setIsLoggedIn} setIsInfoPopupOpen={setIsInfoPopupOpen} setIsSuccessRequest={setIsSuccessRequest} setIsResponse={setIsResponse} />} />}
               <Route
                 path="/movies"
                 element={
@@ -232,15 +139,11 @@ function App() {
                   <ProtectedRoute
                     element={
                       <Profile
-                        toggleMenu={toggleMenu}
-                        onEditProfile={updateUserInfo}
-                        onSignOut={handleLogOut}
-                        isLoading={isLoading}
                         setCurrentUser={setCurrentUser}
                         setIsSuccessRequest={setIsSuccessRequest}
                         setIsResponse={setIsResponse}
                         setIsInfoPopupOpen={setIsInfoPopupOpen}
-                        setIsLoading={setIsLoading}
+                        setIsLoggedIn={setIsLoggedIn}
                       />
                     }
                     isLoggedIn={isLoggedIn}
