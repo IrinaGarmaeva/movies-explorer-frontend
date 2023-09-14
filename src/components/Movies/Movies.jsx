@@ -61,7 +61,8 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
 
   useEffect(() => {
     setMoviesDisplayed(moviesSearched.slice(0, moviesToShow))
-  }, [moviesToShow, moviesSearched])
+  }, [ moviesToShow, moviesSearched, moviesToAdd ])
+
 
   const isMovieSaved = (movie, moviesSaved) => {
     return moviesSaved.find(item => item.movieId === movie.id)
@@ -93,6 +94,7 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
       searchShortMovies({moviesSavedFromLocalStorage: storageSearch, isTumblerActive, searchRequest, setErrorText, errorText, location: location.pathname, setMovies: setMoviesSearched, setIsValid})
     }
   }
+  //console.log(moviesAllAndSaved.length, moviesDisplayed.length)
 
   return (
     <>
@@ -114,6 +116,7 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
           <MoviesCardList
             movies={moviesAllAndSaved.slice(0, moviesToShow)}
             buttonShow={moviesAllAndSaved.length > moviesDisplayed.length}
+            // buttonShow={moviesAllAndSaved.length > moviesToShow}
             loadMore={handleLoadMoreMovies}
             handleLike={handleLike}
             handleDeleteLike={handleDeleteLike}

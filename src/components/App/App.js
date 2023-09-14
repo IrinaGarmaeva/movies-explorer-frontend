@@ -151,6 +151,7 @@ function App() {
         });
         setIsSuccessRequest(true);
         setIsResponse(RESPONSE_MESSAGES.successOnUpdateProfile);
+        resetForm();
       })
       .catch((err) => {
         console.log(err);
@@ -235,6 +236,11 @@ function App() {
                         onEditProfile={updateUserInfo}
                         onSignOut={handleLogOut}
                         isLoading={isLoading}
+                        setCurrentUser={setCurrentUser}
+                        setIsSuccessRequest={setIsSuccessRequest}
+                        setIsResponse={setIsResponse}
+                        setIsInfoPopupOpen={setIsInfoPopupOpen}
+                        setIsLoading={setIsLoading}
                       />
                     }
                     isLoggedIn={isLoggedIn}

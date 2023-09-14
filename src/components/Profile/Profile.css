@@ -85,6 +85,15 @@
   min-height: 12px;
 }
 
+.profile__error {
+  color: var(--color-pink);
+  font-size: 11px;
+  text-align: center;
+  min-height: 14px;
+  margin-bottom: 20px;
+  margin-top: 170px;
+}
+
 .profile__button {
   text-align: center;
   font-size: 13px;
@@ -113,7 +122,6 @@
 }
 
 .profile__button_type_save {
-  margin-top: 223px;
   border-radius: 3px;
   background: var(--color-blue);
   border: none;
@@ -140,6 +148,10 @@
     margin-top: 96px;
   }
 
+  .profile__error {
+    margin-top: 160px;
+  }
+
   .profile__button_type_edit {
     margin-top: 194px;
   }
@@ -154,6 +166,11 @@
   .profile__form {
     margin-top: 80px;
     width: 260px;
+  }
+
+  .profile__error {
+    margin-top: 329px;
+    font-size: 10px;
   }
 
   .profile__button {

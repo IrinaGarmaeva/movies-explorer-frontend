@@ -9,13 +9,19 @@ import {
 } from "../../utils/consts";
 import "./Profile.css";
 
-const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
-  const [editProfile, setEditProfile] = useState(false);
+import mainApi from "../../utils/MainApi";
+import { RESPONSE_MESSAGES } from "../../utils/consts";
+
+const Profile = ({ toggleMenu, onSignOut, setCurrentUser, setIsSuccessRequest, setIsResponse, setIsInfoPopupOpen }) => {
+  const [isEditProfile, setIsEditProfile] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
   const { values, setValues, errors, setErrors, handleChange, resetForm } =
     useFormAndValidation();
 
   const currentUser = useContext(CurrentUserContext);
+  const initialValuesChanged = currentUser.name !== values.name || currentUser.email !== values.email
 
   useEffect(() => {
     setValues({
@@ -23,29 +29,41 @@ const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
       name: currentUser.name,
       email: currentUser.email,
     });
-    setErrors('');
+    setErrors("");
   }, [currentUser]);
-
-  //errors.name || errors.email ||
-  useEffect(() => {
-    if (currentUser.name === values.name || currentUser.email === values.email ) {
-      setIsFormValid(false);
-    } else {
-      setIsFormValid(true);
-    }
-  }, [errors]);
-
-  const logOut = () => {
-    toggleMenu();
-    onSignOut();
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const { name, email } = values;
-    onEditProfile(name, email, resetForm);
-    setEditProfile(false);
-  };
+    setIsLoading(true);
+    setError('');
+    mainApi.editUserdata(name, email)
+      .then((userData) => {
+        setCurrentUser({
+          ...userData,
+          name: userData.name,
+          email: userData.email,
+        });
+        setIsSuccessRequest(true);
+        setIsResponse(RESPONSE_MESSAGES.successOnUpdateProfile);
+        resetForm();
+        setIsEditProfile(false);
+        setIsInfoPopupOpen(true);
+      })
+      .catch((err) => {
+        setIsSuccessRequest(false);
+        setIsEditProfile(true);
+        setIsFormValid(false)
+        if (err === "Ошибка: 409") {
+          setError(RESPONSE_MESSAGES.errorEmail)
+        } else {
+          setError(RESPONSE_MESSAGES.errorGeneral)
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
 
   const handleChangeName = (evt) => {
     handleChange(evt);
@@ -67,6 +85,20 @@ const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
     }
   };
 
+  useEffect(() => {
+    if (errors.name || errors.email) {
+      setIsFormValid(false);
+    }
+    else {
+      setIsFormValid(true);
+    }
+  }, [errors, currentUser]);
+
+  const logOut = () => {
+    toggleMenu();
+    onSignOut();
+  };
+
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, {currentUser.name}!</h1>
@@ -85,13 +117,13 @@ const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
               minLength={2}
               maxLength={30}
               placeholder="Введите своё имя"
-              disabled={isLoading ? 'disabled': ''}
+              disabled={isEditProfile ? "" : "disabled"}
             />
           </div>
           <span className="profile__input-span">{errors.name}</span>
         </fieldset>
         <fieldset className="profile__fieldset">
-        <div className="profile__input-container">
+          <div className="profile__input-container">
             <label className="profile__label" htmlFor="email">
               E-mail
             </label>
@@ -102,26 +134,28 @@ const Profile = ({ toggleMenu, onEditProfile, onSignOut, isLoading }) => {
               name="email"
               className="profile__input"
               placeholder="Введите свой e-mail"
-              disabled={isLoading ? 'disabled': ''}
+              disabled={isEditProfile ? "" : "disabled"}
             />
           </div>
           <span className="profile__input-span">{errors.email}</span>
         </fieldset>
-        {editProfile ? (
-          <Button
-            className={"profile__button profile__button_type_save"}
-            type={"submit"}
-            text={isLoading ? "Сохраняю..." : "Сохранить"}
-            disabled={!isFormValid}
+        {isEditProfile ? (
+          <>
+            <span className="profile__error">{error}</span>
+            <Button
+              className={"profile__button profile__button_type_save"}
+              type={"submit"}
+              text={isLoading ? "Сохраняю..." : "Сохранить"}
+              disabled={!isFormValid || !initialValuesChanged}
           />
+          </>
         ) : (
           <>
             <Button
               className={"profile__button profile__button_type_edit"}
               type={"button"}
               text={"Редактировать"}
-              disabled={!isFormValid}
-              onClick={() => setEditProfile(true)}
+              onClick={() => setIsEditProfile((prevState) => !prevState)}
             />
             <Button
               className={"profile__button profile__button_type_logout"}
