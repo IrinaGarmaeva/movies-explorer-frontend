@@ -55,7 +55,7 @@ const Profile = ({ setCurrentUser, setIsSuccessRequest, setIsResponse, setIsInfo
         setIsSuccessRequest(false);
         setIsEditProfile(true);
         setIsFormValid(false)
-        if (err === "Ошибка: 409") {
+        if (err === "Ошибка: 409" || "Error: 409") {
           setError(RESPONSE_MESSAGES.errorEmail)
         } else {
           setError(RESPONSE_MESSAGES.errorGeneral)
@@ -76,8 +76,9 @@ const Profile = ({ setCurrentUser, setIsSuccessRequest, setIsResponse, setIsInfo
         navigate("/", { replace: true });
       })
       .catch((err) => {
-        console.log(err);
-        window.alert(RESPONSE_MESSAGES.errorGeneral)
+        setIsInfoPopupOpen(true);
+        setIsSuccessRequest(false);
+        setIsResponse(RESPONSE_MESSAGES.errorGeneral);
       })
   }
 

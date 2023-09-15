@@ -1,26 +1,24 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import "./MoviesCard.css";
 import Button from "../Button/Button";
 import { SERVER_URL, duration } from "../../utils/consts";
+import "./MoviesCard.css";
 
 const MoviesCard = ({ card, handleLike, handleDeleteLike }) => {
-  const [isSavedMovie, setSavedCard] = useState(card.isSaved);
+  const [isSavedMovie, setIsSavedMovie] = useState(card.isSaved);
   const location = useLocation();
 
-  const handleLikeClick = () => {
-    setSavedCard(!isSavedMovie);
-    handleLike(card);
-  }
+  const handleLikeClick = ()  => {
+    handleLike(card, setIsSavedMovie, isSavedMovie);
+  };
 
   const handleDeleteClick = () => {
     if(location.pathname === '/movies') {
-      setSavedCard(!isSavedMovie);
-      handleDeleteLike(card);
+      handleDeleteLike(card, setIsSavedMovie, isSavedMovie);
     } else {
       handleDeleteLike(card);
     }
-  }
+  };
 
   return (
     <li className="card">

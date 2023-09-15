@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import "./Movies.css";
 import SearchForm from "../SearchForm/SearchForm";
@@ -6,7 +6,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import { getFromLocalStorage } from "../../utils/localStorageFunctions";
 import { searchMoviesInMovies, searchShortMovies } from "../../utils/searchMovies";
-import { WIDTH_1275, WIDTH_767, CARDS_12, CARDS_8, CARDS_5, CARDS_3, CARDS_2, CARDS_1 } from "../../utils/consts";
+import { WIDTH_1275, WIDTH_767, CARDS_12, CARDS_8, CARDS_5, CARDS_3, CARDS_2} from "../../utils/consts";
 
 
 const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) => {
@@ -16,9 +16,12 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
   const [isValid, setIsValid] = useState(true); // state to show/hide search input error
   const [searchRequest, setSearchRequest] = useState("");
   const [isTumblerActive, setIsTumblerActive] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth); //TODO ДОБАВИЛА ДЛЯ ПРОВЕРКИ
   const [moviesToShow, setMoviesToShow] = useState(CARDS_12);
   const [moviesToAdd, setMoviesToAdd] = useState(CARDS_3);
   const [moviesDisplayed, setMoviesDisplayed] = useState([]);
+
+
   const location = useLocation();
 
   // Get and set data from local storage to show on page
@@ -38,30 +41,51 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
       }
   }, []);
 
-  const handleResize = () => {
-    const width = window.innerWidth
-    if(width > WIDTH_1275) {
-      setMoviesToShow(CARDS_12);
-      setMoviesToAdd(CARDS_3);
-    } else if(width <= WIDTH_1275 && width > WIDTH_767) {
-      setMoviesToShow(CARDS_8);
-      setMoviesToAdd(CARDS_2);
-    } else if( width <= WIDTH_767) {
-      setMoviesToShow(CARDS_5);
-      setMoviesToAdd(CARDS_1);
-    }
-  }
+
+  const handleResize = useCallback(() => {
+      setWidth(window.innerWidth)
+      if(width > WIDTH_1275) {
+        setMoviesToShow(CARDS_12);
+        setMoviesToAdd(CARDS_3);
+      } else if(width <= WIDTH_1275 && width > WIDTH_767) {
+        setMoviesToShow(CARDS_8);
+        setMoviesToAdd(CARDS_2);
+      } else if( width <= WIDTH_767) {
+        setMoviesToShow(CARDS_5);
+        setMoviesToAdd(CARDS_2);
+      }
+  }, [])
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [window.innerWidth, moviesToShow, moviesToAdd, searchRequest])
+  }, [handleResize, width, moviesToShow, moviesToAdd, searchRequest])
+
+  useEffect(() => {
+    let moviesCount = CARDS_12
+    let moviesMore = CARDS_3
+
+    if(width > WIDTH_1275){
+      moviesCount = CARDS_12;
+      moviesMore = CARDS_3;
+    } else if(width <= WIDTH_1275 && width > WIDTH_767){
+      moviesCount = CARDS_8;
+      moviesMore = CARDS_2;
+    } else if (width <= WIDTH_767){
+      moviesCount = CARDS_5;
+      moviesMore = CARDS_2;
+    }
+
+    setMoviesToShow(moviesCount);
+    setMoviesToAdd(moviesMore);
+  }, [width, searchRequest])
 
   useEffect(() => {
     setMoviesDisplayed(moviesSearched.slice(0, moviesToShow))
-  }, [ moviesToShow, moviesSearched, moviesToAdd ])
+  }, [ moviesToShow, moviesSearched, moviesToAdd, window.beforeunload ])
 
 
   const isMovieSaved = (movie, moviesSaved) => {
@@ -95,7 +119,6 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
       searchShortMovies({moviesSavedFromLocalStorage: storageSearch, isTumblerActive, searchRequest, setErrorText, errorText, location: location.pathname, setMovies: setMoviesSearched, setIsValid})
     }
   }
-  //console.log(moviesAllAndSaved.length, moviesDisplayed.length)
 
   return (
     <>
@@ -116,8 +139,9 @@ const Movies = ({ handleLike, handleDeleteLike, moviesSaved, setMoviesSaved }) =
         (moviesSearched.length !== 0 && errorText.length === 0) && (
           <MoviesCardList
             movies={moviesAllAndSaved.slice(0, moviesToShow)}
+            moviesSaved={moviesSaved}
+           // setMoviesSaved={setMoviesSaved}
             buttonShow={moviesAllAndSaved.length > moviesDisplayed.length}
-            // buttonShow={moviesAllAndSaved.length > moviesToShow}
             loadMore={handleLoadMoreMovies}
             handleLike={handleLike}
             handleDeleteLike={handleDeleteLike}

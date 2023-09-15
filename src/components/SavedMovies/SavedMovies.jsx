@@ -7,7 +7,7 @@ import mainApi from '../../utils/MainApi';
 import { getFromLocalStorage, saveToLocalStorage } from '../../utils/localStorageFunctions';
 import { searchMoviesInSavedMovies, searchShortMovies } from '../../utils/searchMovies';
 
-const SavedMovies = ({moviesSaved, setMoviesSaved, handleDeleteLike}) => {
+const SavedMovies = ({moviesSaved, setMoviesSaved, handleDeleteLike }) => {
 const [searchRequest, setSearchRequest] = useState('');
 const [isTumblerActive, setIsTumblerActive] = useState(false);
 const [errorText, setErrorText] = useState('')
@@ -19,7 +19,7 @@ const location = useLocation();
     mainApi.getFavouriteMovies()
       .then(res => {
         saveToLocalStorage('saved-movies', res);
-        setMoviesSaved(res);
+        setMoviesSaved(res.reverse());
       })
       .catch(err => console.log(err))
   }, [setMoviesSaved])
@@ -38,7 +38,7 @@ const location = useLocation();
     <section className='saved-movies'>
       <SearchForm searchRequest={searchRequest} setSearchRequest={setSearchRequest} onSearch={handleSearchMovies}  isValid={isValid} isTumblerActive={isTumblerActive} setIsTumblerActive={setIsTumblerActive} handleTumblerClick={handleSearchShortMovies}/>
       {errorText && <div className="movies__error">{errorText}</div>}
-      <MoviesCardList moviesSaved={moviesSaved} handleDeleteLike={handleDeleteLike}/>
+      <MoviesCardList moviesSaved={moviesSaved} handleDeleteLike={handleDeleteLike} />
     </section>
   )
 }

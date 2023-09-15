@@ -21,7 +21,7 @@ const MoviesCardList = ({
           <>
             {movies.map((item) => {
               return (
-                <MoviesCard key={item.id} card={item} handleLike={handleLike} handleDeleteLike={handleDeleteLike} />
+                <MoviesCard key={item.id} card={item} handleLike={handleLike} handleDeleteLike={handleDeleteLike}/>
               );
             })}
           </>
@@ -29,7 +29,7 @@ const MoviesCardList = ({
         {savedMoviesRoute && (
           <>
             {moviesSaved.map((item) => {
-              return <MoviesCard key={item._id} card={item} handleDeleteLike={handleDeleteLike} />;
+              return <MoviesCard key={item._id} card={item}  handleDeleteLike={handleDeleteLike}/>;
             })}
           </>
         )}

@@ -13,7 +13,8 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import InfoPopup from "../InfoPopup/InfoPopup";
-import { saveToLocalStorage, getFromLocalStorage } from "../../utils/localStorageFunctions";
+import { getFromLocalStorage, saveToLocalStorage } from "../../utils/localStorageFunctions";
+import { RESPONSE_MESSAGES } from "../../utils/consts";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,7 +62,7 @@ function App() {
         }
         if (res.status !== 401) {
           setIsLoggedIn(true);
-          navigate(location.pathname);
+          headerRoutes && navigate(location.pathname);
         }
       })
       .catch((err) => {
@@ -74,16 +75,21 @@ function App() {
     checkToken();
   }, []);
 
-  const handleLike = (movie) => {
+  const handleLike = (movie, setIsSavedMovie, isSavedMovie) => {
     mainApi.addMovieToFavorites(movie)
       .then((data) => {
         setMoviesSaved([data, ...moviesSaved])
-        saveToLocalStorage('saved-movies', [data, ...moviesSaved])
+        saveToLocalStorage('saved-movies', [data, ...moviesSaved]);
+        setIsSavedMovie(!isSavedMovie);
       })
-      .catch(err => console.log(err))
-  }
+      .catch(() => {
+        setIsSuccessRequest(false);
+        setIsInfoPopupOpen(true);
+        setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+      })
+  };
 
-  const handleDeleteLike = (movie) => {
+  const handleDeleteLike = (movie, setIsSavedMovie, isSavedMovie) => {
     let id = movie._id
 
     if(!id && moviesSaved.length > 0) {
@@ -96,11 +102,18 @@ function App() {
       mainApi.deleteMovieFromFavotites(id)
         .then(() => {
           setMoviesSaved(moviesSaved.filter((card) => card._id !== id));
-          saveToLocalStorage('saved-movies', moviesSavedFromLocalStorage.filter((card) => card._id !== id) )
+          saveToLocalStorage('saved-movies', moviesSavedFromLocalStorage.filter((card) => card._id !== id));
+          location.pathname === '/movies' && setIsSavedMovie(!isSavedMovie)
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err)
+          setIsSuccessRequest(false);
+          setIsInfoPopupOpen(true);
+          setIsResponse(RESPONSE_MESSAGES.errorGeneral);
+        })
     }
   }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -119,7 +132,7 @@ function App() {
                 path="/movies"
                 element={
                   <ProtectedRoute
-                    element={<Movies handleLike={handleLike} handleDeleteLike={handleDeleteLike} moviesSaved={moviesSaved} setMoviesSaved={setMoviesSaved} />}
+                    element={<Movies handleLike={handleLike} handleDeleteLike={handleDeleteLike} moviesSaved={moviesSaved} setMoviesSaved={setMoviesSaved}/>}
                     isLoggedIn={isLoggedIn}
                   />
                 }
