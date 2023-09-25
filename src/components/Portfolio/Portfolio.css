@@ -1,0 +1,42 @@
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  padding: 0 70px 115px 70px;
+}
+
+.portfolio__title {
+  color: var(--color-light-dark);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 111.111%;
+}
+
+.portfolio__project-list {
+  margin-top: 50px;
+}
+
+@media (max-width: 870px) {
+  .portfolio {
+    padding: 0 50px 80px 50px;
+  }
+  .portfolio__project-list {
+    margin-top: 49px;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .portfolio {
+    padding: 0 14px 70px 14px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 142.857%;
+  }
+
+  .portfolio__project-list {
+    margin-top: 40px;
+  }
+}
