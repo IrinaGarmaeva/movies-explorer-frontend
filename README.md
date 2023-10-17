@@ -1,6 +1,6 @@
 # Movies Explorer App from [Yandex Practicum](https://practicum.yandex.ru/) Web-developer course.
 
-Frontend part for the `Movies Explorer App`. This app is a full-stack interactive SPA users can search for movies by keywords and add them to favorites in their personal account.
+Frontend part for the `Movies Explorer App`. This app is a full-stack interactive SPA where users can search for movies by keywords and add them to favorites in their personal account.
 
 ## Links
 
